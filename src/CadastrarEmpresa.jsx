@@ -9,28 +9,7 @@ import axios from 'axios';
 import Alert from '@mui/material/Alert';
 import Slide from '@mui/material/Slide';
 
-const customTheme = (outerTheme) =>
-  createTheme({
-    palette: {
-      mode: outerTheme.palette.mode,
-    },
-    components: {
-      MuiTextField: {
-        styleOverrides: {
-          root: {
-            '--TextField-brandBorderColor': '#E0E3E7',
-            '--TextField-brandBorderHoverColor': '#B2BAC2',
-            '--TextField-brandBorderFocusedColor': '#6F7E8C',
-            '& label.Mui-focused': {
-              color: 'var(--TextField-brandBorderFocusedColor)',
-            },
-          },
-        },
-      },
-    },
-  });
-
-export default function CadastrarEmpresaTextField() {
+export default function CadastrarEmpresa() {
   const outerTheme = useTheme();
   const [empresaData, setEmpresaData] = useState({
     nomeEmpresa: '',
@@ -41,9 +20,10 @@ export default function CadastrarEmpresaTextField() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    // Convertendo o texto para caixa alta (maiúsculas)
     setEmpresaData({
       ...empresaData,
-      [name]: value,
+      [name]: value.toUpperCase(),
     });
   };
 
@@ -73,6 +53,17 @@ export default function CadastrarEmpresaTextField() {
     }, 5000);
   };
 
+  // Criando um tema personalizado com os TextFields com estilo outlined
+  const customTheme = createTheme({
+    components: {
+      MuiTextField: {
+        defaultProps: {
+          variant: 'outlined',
+        },
+      },
+    },
+  });
+
   return (
     <Box
       sx={{
@@ -83,31 +74,29 @@ export default function CadastrarEmpresaTextField() {
       <Typography variant="h4" gutterBottom style={{ fontSize: 'clamp(16px, 5vw, 24px)' }}>
         Cadastre uma nova empresa
       </Typography>
-      <ThemeProvider theme={customTheme(outerTheme)}>
+      {/* Aplicando o tema personalizado */}
+      <ThemeProvider theme={customTheme}>
         <TextField
           label="Razão Social"
-          variant="filled"
           name="nomeEmpresa"
           value={empresaData.nomeEmpresa}
           onChange={handleInputChange}
         />
         <TextField
           label="Telefone"
-          variant="filled"
           name="telefone"
           value={empresaData.telefone}
           onChange={handleInputChange}
         />
         <TextField
           label="Endereço"
-          variant="filled"
           name="endereco"
           value={empresaData.endereco}
           onChange={handleInputChange}
         />
- <Button type="button" onClick={handleCadastrarEmpresaClick} variant="contained" endIcon={<SendIcon />}>
-  CADASTRAR
-</Button>
+        <Button type="button" onClick={handleCadastrarEmpresaClick} variant="contained" endIcon={<SendIcon />}>
+          CADASTRAR
+        </Button>
       </ThemeProvider>
       <Slide direction="down" in={alertStatus !== null}>
         <Box sx={{ 

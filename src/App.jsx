@@ -18,8 +18,9 @@ import Typography from '@mui/material/Typography';
 import AddHomeIcon from '@mui/icons-material/AddHome';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
-import CadastrarEmpresaTextField from './CadastrarEmpresaTextField'; // Importação do componente CadastrarEmpresaTextField
+import CadastrarEmpresa from './CadastrarEmpresa'; // Importação do componente CadastrarEmpresaTextField
 import CadastrarEquipamentos from './CadastrarEquipamentos';
+import CustomizedTables from './CustomizedTables'; // Importação do componente CustomizedTables
 import './CustomDrawer.css'; // Importação do arquivo CSS
 import './styles.css';
 
@@ -32,6 +33,7 @@ function ResponsiveDrawer(props) {
   const [expandedCategories, setExpandedCategories] = useState({});
   const [showCadastrarEmpresa, setShowCadastrarEmpresa] = useState(false);
   const [showCadastrarEquipamentos, setShowCadastrarEquipamentos] = useState(false);
+  const [showConsultarEmpresa, setShowConsultarEmpresa] = useState(false); // Adicionando estado para controlar a exibição da tabela
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -56,24 +58,38 @@ function ResponsiveDrawer(props) {
     // Esconder o campo de Cadastrar Empresa se outra categoria for clicada
     setShowCadastrarEmpresa(false);
     setShowCadastrarEquipamentos(false);
+    setShowConsultarEmpresa(false); // Fechar a tabela ao clicar em outra categoria
   };
 
   const handleSubItemClick = (subItem) => {
     if (subItem === 'Cadastrar Empresa') {
       setShowCadastrarEmpresa(true);
       setShowCadastrarEquipamentos(false);
+      setShowConsultarEmpresa(false); // Fechar a tabela ao clicar em "Cadastrar Empresa"
     } else if (subItem === 'Cadastrar Equipamentos') {
       setShowCadastrarEmpresa(false);
       setShowCadastrarEquipamentos(true);
+      setShowConsultarEmpresa(false); // Fechar a tabela ao clicar em "Cadastrar Equipamentos"
+    } else if (subItem === 'Consultar Empresa') {
+      setShowCadastrarEmpresa(false);
+      setShowCadastrarEquipamentos(false);
+      setShowConsultarEmpresa(true); // Abrir a tabela ao clicar em "Consultar Empresa"
     } else {
       setShowCadastrarEmpresa(false);
       setShowCadastrarEquipamentos(false);
+      setShowConsultarEmpresa(false);
     }
   };
 
   const drawer = (
     <div>
-      <Toolbar />
+      <Toolbar style={{ position: 'relative' }}>
+        <div style={{ position: 'absolute', left: '0', top: '0', width: '100%', height: '100%', background: '#1393cc', padding: '10px', borderRadius: '0px' }}></div>
+        <Typography variant="h6" noWrap component="div" style={{ position: 'absolute', left: '73px', top: '50%', transform: 'translateY(-50%)', color: 'white' }}>
+          Stratus Telecom
+        </Typography>
+        <img src="/src/img/images.png" alt="Logo da Empresa" style={{ width: '23%', top: '0%', maxHeight: '90px', position: 'absolute', left: '15px' }} />
+      </Toolbar>
       <Divider />
       <List>
         {[
@@ -116,6 +132,7 @@ function ResponsiveDrawer(props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          bgcolor: '#1393cc'
         }}
       >
         <Toolbar>
@@ -128,14 +145,25 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Stratus Telecom
+          <Typography variant="h6" noWrap component="div" style={{ color: '#ffffff' }}>
+            
           </Typography>
         </Toolbar>
       </AppBar>
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{
+          width: { sm: drawerWidth },
+          flexShrink: { sm: 0 },
+          overflowX: 'auto', // Adicionando overflow-x: auto para permitir rolagem horizontal
+          '&::-webkit-scrollbar': { // Estilizando a barra de rolagem apenas para navegadores WebKit (Chrome, Safari, etc.)
+            height: '12px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+            borderRadius: '10px',
+          },
+        }}
         aria-label="mailbox folders"
       >
         <Drawer
@@ -171,16 +199,15 @@ function ResponsiveDrawer(props) {
       >
         <Toolbar />
         <Typography paragraph>
-
         </Typography>
         <Typography paragraph>
-
         </Typography>
       </Box>
       {/* Renderizar CadastrarEmpresaTextField ou CadastrarEquipamentos apenas se showCadastrarEmpresa ou showCadastrarEquipamentos for verdadeiro */}
       <Box className="container-cadastrar-empresa">
-        {showCadastrarEmpresa && <CadastrarEmpresaTextField />}
+        {showCadastrarEmpresa && <CadastrarEmpresa />}
         {showCadastrarEquipamentos && <CadastrarEquipamentos />}
+        {showConsultarEmpresa && <CustomizedTables />} {/* Renderizar a tabela quando showConsultarEmpresa for verdadeiro */}
       </Box>
     </Box>
   );

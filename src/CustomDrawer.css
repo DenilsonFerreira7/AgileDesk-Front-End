@@ -6,10 +6,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.alert-container {
-    position: fixed;
-    bottom: 160px;
-    left: 90%;
-    transform: translateX(-50%);
-    z-index: 999;
+.css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
+    border-right: 1px solid #1393cc !important;
 }
