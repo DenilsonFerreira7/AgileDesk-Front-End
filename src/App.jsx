@@ -21,6 +21,8 @@ import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import CadastrarEmpresa from './CadastrarEmpresa'; // Importação do componente CadastrarEmpresaTextField
 import CadastrarEquipamentos from './CadastrarEquipamentos';
 import CustomizedTables from './CustomizedTables'; // Importação do componente CustomizedTables
+import SupportAgentIcon from '@mui/icons-material/SupportAgent'; // Adicionando o ícone SupportAgentIcon
+import PsychologyIcon from '@mui/icons-material/Psychology'; // Adicionando o ícone PsychologyIcon
 import './CustomDrawer.css'; // Importação do arquivo CSS
 import './styles.css';
 
@@ -96,12 +98,14 @@ function ResponsiveDrawer(props) {
           { primary: 'Empresa', subItems: ['Cadastrar Empresa', 'Cadastrar Equipamentos', 'Consultar Empresa'] },
           { primary: 'Técnico', subItems: ['Cadastrar Técnico', 'Configurar Conta'] },
           { primary: 'Laudo Técnico', subItems: ['Criar Laudo', 'Consultar Laudo'] },
+          { primary: 'Chamados', subItems: ['Abrir chamado', 'Consultar chamados'] },
+          { primary: 'Base de Conhecimento', subItems: ['Publicar artigo','Visualizar Artigos'] },
         ].map((menuItem, index) => (
           <div key={index}>
             <ListItem disablePadding onClick={() => handleCategoryClick(menuItem.primary)}>
               <ListItemButton>
                 <ListItemIcon>
-                  {index === 0 ? <AddHomeIcon /> : (index === 1 ? <ManageAccountsIcon /> : <ModeEditOutlineIcon />)}
+                  {index === 0 ? <AddHomeIcon /> : (index === 1 ? <ManageAccountsIcon /> : (index === 3 ? <SupportAgentIcon /> : (index === 4 ? <PsychologyIcon /> : <ModeEditOutlineIcon />)))}
                 </ListItemIcon>
                 <ListItemText primary={menuItem.primary} />
               </ListItemButton>
@@ -110,6 +114,8 @@ function ResponsiveDrawer(props) {
               {menuItem.subItems.map((subItem, subIndex) => (
                 <ListItem key={subIndex} disablePadding onClick={() => handleSubItemClick(subItem)}>
                   <ListItemButton>
+                    <ListItemIcon>
+                    </ListItemIcon>
                     <ListItemText primary={subItem} className="listItemText" />
                   </ListItemButton>
                 </ListItem>
