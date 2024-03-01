@@ -10,7 +10,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
 import axios from 'axios';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -19,7 +18,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: theme.palette.common.white,
     textAlign: 'center',
     fontSize: 14,
-    width: '33.33%', // Definindo largura fixa para cada célula
+    width: '25%', // Definindo largura fixa para cada célula
     position: 'sticky', // Tornando o cabeçalho sticky
     top: 0, // Definindo a posição superior para 0
     zIndex: 1000, // Ajustando o índice z para manter acima de outros elementos
@@ -27,7 +26,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     textAlign: 'center',
-    width: '30.33%', // Definindo largura fixa para cada célula
+    width: '25%', // Definindo largura fixa para cada célula
   },
 }));
 
@@ -138,17 +137,17 @@ export default function ConsultarEmpresasTable() {
             <Table aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>ID</StyledTableCell>
                   <StyledTableCell>Nome Equipamento</StyledTableCell>
                   <StyledTableCell>Descrição</StyledTableCell>
+                  <StyledTableCell>Setor</StyledTableCell> {/* Adicionando célula para o setor */}
                 </TableRow>
               </TableHead>
               <TableBody>
                 {equipamentos.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage).map((equipamento) => (
                   <StyledTableRow key={equipamento.id}>
-                    <StyledTableCell>{equipamento.id}</StyledTableCell>
                     <StyledTableCell>{equipamento.nomeEquipamento}</StyledTableCell>
                     <StyledTableCell>{equipamento.descricao}</StyledTableCell>
+                    <StyledTableCell>{equipamento.setor}</StyledTableCell> {/* Renderizando o setor */}
                   </StyledTableRow>
                 ))}
               </TableBody>

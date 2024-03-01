@@ -15,31 +15,40 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
-
 export default function CadastrarEquipamentos() {
   const [empresas, setEmpresas] = useState([]);
   const [selectedEmpresa, setSelectedEmpresa] = useState('');
+  const [selectedSetor, setSelectedSetor] = useState('');
   const [selectedTipoEquipamento, setSelectedTipoEquipamento] = useState('');
+  const [selectedTipoEquipamentoId, setSelectedTipoEquipamentoId] = useState('');
   const [selectedCPU, setSelectedCPU] = useState('');
-  const [selectedFonte, setSelectedFonte] = useState('');
   const [selectedMemoriaRAM, setSelectedMemoriaRAM] = useState('');
   const [selectedSistemaOperacional, setSelectedSistemaOperacional] = useState('');
   const [equipamentoData, setEquipamentoData] = useState({
     nomeEquipamento: '',
     descricao: '',
+    acessoRemoto: '',
+    senhaRemoto: ''
   });
   const [alertMessage, setAlertMessage] = useState('');
   const [alertSeverity, setAlertSeverity] = useState('');
   const [alertOpen, setAlertOpen] = useState(false);
+  const [temAcessoRemoto, setTemAcessoRemoto] = useState(false);
+  const [tiposEquipamento, setTiposEquipamento] = useState([]);
 
-  // Opções para cada categoria
   const opcoesCPU = ['CELERON', 'I3', 'I5', 'I7'];
-  const opcoesFonte = ['250', '350', '400', '500', '600'];
   const opcoesMemoriaRAM = ['2', '4', '6', '12', '16', '32'];
   const opcoesSistemaOperacional = ['WIN7', 'WIN8', 'WIN10', 'WIN11'];
 
   useEffect(() => {
-    // Ao carregar o componente, buscar a lista de empresas cadastradas
+    axios.get('http://localhost:8080/TipoEquipamento/todas')
+      .then(response => {
+        setTiposEquipamento(response.data);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar tipos de equipamento:', error);
+      });
+
     axios.get('http://localhost:8080/empresa/todas')
       .then(response => {
         setEmpresas(response.data);
@@ -51,52 +60,42 @@ export default function CadastrarEquipamentos() {
 
   useEffect(() => {
     atualizarDescricao();
-  }, [selectedTipoEquipamento, selectedCPU, selectedFonte, selectedMemoriaRAM, selectedSistemaOperacional]);
+  }, [selectedTipoEquipamento, selectedCPU, selectedMemoriaRAM, selectedSistemaOperacional]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEquipamentoData({
       ...equipamentoData,
-      [name]: value.toUpperCase(), // Converter para caixa alta
+      [name]: value.toUpperCase(),
     });
+  };
+
+  const handleCPUMudanca = (e) => {
+    const cpuSelecionada = e.target.value;
+    setSelectedCPU(cpuSelecionada.toUpperCase());
+  };
+
+  const handleMemoriaRAMMudanca = (e) => {
+    const memoriaRAMSelecionada = e.target.value;
+    setSelectedMemoriaRAM(memoriaRAMSelecionada.toUpperCase());
+  };
+
+  const handleSistemaOperacionalMudanca = (e) => {
+    const sistemaOperacionalSelecionado = e.target.value;
+    setSelectedSistemaOperacional(sistemaOperacionalSelecionado.toUpperCase());
   };
 
   const handleTipoEquipamentoChange = (e) => {
     const selectedTipo = e.target.value;
     setSelectedTipoEquipamento(selectedTipo);
-
-    // Limpar seleções anteriores ao mudar o tipo de equipamento
-    setSelectedCPU('');
-    setSelectedFonte('');
-    setSelectedMemoriaRAM('');
-    setSelectedSistemaOperacional('');
-  };
-
-  const handleCPUMudanca = (e) => {
-    const cpuSelecionada = e.target.value;
-    setSelectedCPU(cpuSelecionada.toUpperCase()); // Converter para caixa alta
-  };
-
-  const handleFonteMudanca = (e) => {
-    const fonteSelecionada = e.target.value;
-    setSelectedFonte(fonteSelecionada.toUpperCase()); // Converter para caixa alta
-  };
-
-  const handleMemoriaRAMMudanca = (e) => {
-    const memoriaRAMSelecionada = e.target.value;
-    setSelectedMemoriaRAM(memoriaRAMSelecionada.toUpperCase()); // Converter para caixa alta
-  };
-
-  const handleSistemaOperacionalMudanca = (e) => {
-    const sistemaOperacionalSelecionado = e.target.value;
-    setSelectedSistemaOperacional(sistemaOperacionalSelecionado.toUpperCase()); // Converter para caixa alta
+    const selectedTipoId = tiposEquipamento.find(tipo => tipo.nomeEquipamento === selectedTipo)?.tipoEquipamentoId; // Corrigido para pegar o ID diretamente
+    setSelectedTipoEquipamentoId(selectedTipoId);
   };
 
   const atualizarDescricao = () => {
-    // Atualizar a descrição com base nas opções selecionadas
     let descricao = '';
     if (selectedTipoEquipamento === 'COMPUTADOR' || selectedTipoEquipamento === 'NOTEBOOK') {
-      descricao = `Tipo: ${selectedTipoEquipamento} | CPU: ${selectedCPU} | Fonte: ${selectedFonte} | Memória RAM: ${selectedMemoriaRAM} | SO: ${selectedSistemaOperacional}`;
+      descricao = `CPU: ${selectedCPU} | Memória RAM: ${selectedMemoriaRAM} | SO: ${selectedSistemaOperacional}`;
     }
     setEquipamentoData({
       ...equipamentoData,
@@ -105,46 +104,51 @@ export default function CadastrarEquipamentos() {
   };
 
   const limparCampos = () => {
+    console.log('Limpando campos...'); // Adicionando console.log para verificar se a função é chamada
     setSelectedEmpresa('');
     setSelectedTipoEquipamento('');
+    setSelectedTipoEquipamentoId('');
     setSelectedCPU('');
-    setSelectedFonte('');
     setSelectedMemoriaRAM('');
     setSelectedSistemaOperacional('');
+    setSelectedSetor('');
     setEquipamentoData({
       nomeEquipamento: '',
       descricao: '',
+      acessoRemoto: '',
+      senhaRemoto: ''
     });
   };
 
   const handleCadastrarEquipamentoClick = async () => {
     try {
-      // Verificar se a empresa e o tipo de equipamento foram selecionados
-      if (!selectedEmpresa || !selectedTipoEquipamento) {
-        exibirAlerta('Selecione uma empresa e um tipo de equipamento.', 'error');
+      if (!selectedEmpresa || !selectedTipoEquipamentoId || !selectedSetor) {
+        exibirAlerta('Selecione uma empresa, um tipo de equipamento e um setor.', 'error');
         return;
       }
-
-      // Enviar requisição para cadastrar o equipamento
-      const response = await axios.post(`http://localhost:8080/empresas/${selectedEmpresa}/equipamentos/cadastrar`, equipamentoData);
-      
-      // Limpar os campos após o cadastro
+  
+      const dataToSend = {
+        nomeEquipamento: equipamentoData.nomeEquipamento,
+        setor: selectedSetor,
+        descricao: equipamentoData.descricao,
+        acessoRemoto: equipamentoData.acessoRemoto,
+        senhaRemoto: equipamentoData.senhaRemoto
+      };
+  
+      const response = await axios.post(`http://localhost:8080/empresas/${selectedEmpresa}/equipamentos/cadastrar?tipoEquipamentoId=${selectedTipoEquipamentoId}`, dataToSend);
+  
       limparCampos();
-
-      // Definir mensagem de sucesso
+  
       exibirAlerta('Equipamento cadastrado com sucesso!', 'success');
     } catch (error) {
-      // Lidar com erros
       exibirAlerta('Erro ao cadastrar equipamento.', 'error');
       console.error('Erro ao cadastrar equipamento:', error);
     }
   };
-
   const exibirAlerta = (mensagem, severidade) => {
     setAlertMessage(mensagem);
     setAlertSeverity(severidade);
     setAlertOpen(true);
-    // Fechar o alerta após 5 segundos
     setTimeout(() => {
       setAlertOpen(false);
     }, 5000);
@@ -154,27 +158,6 @@ export default function CadastrarEquipamentos() {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom style={{ fontSize: 'clamp(16px, 5vw, 24px)', textAlign: 'left', marginBottom: theme.spacing(6) }}>
-        Cadastre um novo equipamento
-      </Typography>
-
-      <Stack spacing={1} sx={{ position: 'fixed', top: theme.spacing(-12), left: theme.spacing(3), zIndex: theme.zIndex.drawer + 2 }}>
-      <Slide direction="down" in={alertOpen} mountOnEnter unmountOnExit>
-  <Alert variant="filled" severity={alertSeverity} sx={{ height: '50px',
-
-position: 'fixed',
-bottom: 16,
-top:-100,
-left: '0%',
-width: '100%',
-transform: 'translateX(-50%)',
-zIndex: 999 
-}}>
-    {alertMessage}
-  </Alert>
-</Slide>
-      </Stack>
-
       <Box
         component="form"
         sx={{
@@ -183,7 +166,35 @@ zIndex: 999
         noValidate
         autoComplete="off"
       >
+        <Typography variant="h4" gutterBottom style={{ fontSize: 'clamp(16px, 5vw, 24px)', textAlign: 'center' }}>
+          Cadastre um novo equipamento
+        </Typography>
+
+        <Stack spacing={1} sx={{ position: 'fixed', top: theme.spacing(-12), left: theme.spacing(3), zIndex: theme.zIndex.drawer + 2 }}>
+          <Slide direction="down" in={alertOpen} mountOnEnter unmountOnExit>
+            <Alert variant="filled" severity={alertSeverity} sx={{ height: '50px',
+              position: 'fixed',
+              bottom: 16,
+              top:-100,
+              left: '0%',
+              width: '100%',
+              transform: 'translateX(-50%)',
+              zIndex: 999 
+            }}>
+              {alertMessage}
+            </Alert>
+          </Slide>
+        </Stack>
+
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <TextField
+            id="setor"
+            name="setor"
+            label="Setor"
+            value={selectedSetor}
+            onChange={(e) => setSelectedSetor(e.target.value)}
+            sx={{ m: 1, width: '40ch' }}
+          />
           <TextField id="nomeEquipamento" name="nomeEquipamento" label="Nome do Equipamento" value={equipamentoData.nomeEquipamento} onChange={handleInputChange} sx={{ width: '40ch' }} />
           <FormControl sx={{ m: 1, width: '40ch' }}>
             <InputLabel id="demo-multiple-name-label">Selecione a Empresa</InputLabel>
@@ -211,10 +222,11 @@ zIndex: 999
               input={<OutlinedInput label="Selecione o Tipo de Equipamento" />}
             >
               <MenuItem value="">Selecione...</MenuItem>
-              <MenuItem value="COMPUTADOR">COMPUTADOR</MenuItem>
-              <MenuItem value="NOTEBOOK">NOTEBOOK</MenuItem>
-              <MenuItem value="RACK">RACK</MenuItem>
-              <MenuItem value="IMPRESSORA">IMPRESSORA</MenuItem>
+              {tiposEquipamento.map((tipo) => (
+                <MenuItem key={tipo.tipoEquipamentoId} value={tipo.nomeEquipamento}>
+                  {tipo.nomeEquipamento}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
           {(selectedTipoEquipamento === 'COMPUTADOR' || selectedTipoEquipamento === 'NOTEBOOK') && (
@@ -230,23 +242,6 @@ zIndex: 999
                 >
                   <MenuItem value="">Selecione...</MenuItem>
                   {opcoesCPU.map((opcao) => (
-                    <MenuItem key={opcao} value={opcao}>
-                      {opcao}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl sx={{ m: 1, width: '40ch' }}>
-                <InputLabel id="fonte-label">Selecione a Fonte</InputLabel>
-                <Select
-                  labelId="fonte-label"
-                  id="fonte"
-                  value={selectedFonte}
-                  onChange={handleFonteMudanca}
-                  input={<OutlinedInput label="Selecione a Fonte" />}
-                >
-                  <MenuItem value="">Selecione...</MenuItem>
-                  {opcoesFonte.map((opcao) => (
                     <MenuItem key={opcao} value={opcao}>
                       {opcao}
                     </MenuItem>
@@ -287,6 +282,39 @@ zIndex: 999
                   ))}
                 </Select>
               </FormControl>
+              <FormControl sx={{ m: 1, width: '40ch' }}>
+                <InputLabel id="temAcessoRemoto-label">Tem acesso remoto?</InputLabel>
+                <Select
+                  labelId="temAcessoRemoto-label"
+                  id="temAcessoRemoto"
+                  value={temAcessoRemoto}
+                  onChange={(e) => setTemAcessoRemoto(e.target.value)}
+                  input={<OutlinedInput label="Tem acesso remoto?" />}
+                >
+                  <MenuItem value={false}>Não</MenuItem>
+                  <MenuItem value={true}>Sim</MenuItem>
+                </Select>
+              </FormControl>
+              {temAcessoRemoto && (
+                <>
+                  <TextField
+                    id="acessoRemoto"
+                    name="acessoRemoto"
+                    label="Acesso Remoto"
+                    value={equipamentoData.acessoRemoto}
+                    onChange={handleInputChange}
+                    sx={{ m: 1, width: '40ch' }}
+                  />
+                  <TextField
+                    id="senhaRemoto"
+                    name="senhaRemoto"
+                    label="Senha Remoto"
+                    value={equipamentoData.senhaRemoto}
+                    onChange={handleInputChange}
+                    sx={{ m: 1, width: '40ch' }}
+                  />
+                </>
+              )}
             </>
           )}
           {['RACK', 'IMPRESSORA'].includes(selectedTipoEquipamento) && (
@@ -296,18 +324,16 @@ zIndex: 999
               label="Descrição"
               multiline
               rows={4}
-              value=""
+              value={equipamentoData.descricao}
               onChange={handleInputChange}
               fullWidth
-              disabled
+              disabled={selectedTipoEquipamento !== 'RACK' && selectedTipoEquipamento !== 'IMPRESSORA'} // Corrigido para habilitar apenas quando o tipo de equipamento for RACK ou IMPRESSORA
               sx={{ m: 1, width: '40ch' }} // Estilo para a descrição
             />
           )}
-          <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: theme.spacing(6) }}>
-            <Button variant="contained" endIcon={<SendIcon />} onClick={handleCadastrarEquipamentoClick} sx={{ m: 1 }}>
-              Cadastrar
-            </Button>
-          </Box>
+          <Button type="button" onClick={handleCadastrarEquipamentoClick} variant="contained" endIcon={<SendIcon />}>
+            CADASTRAR
+          </Button>
         </Box>
       </Box>
     </Box>

@@ -25,6 +25,7 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent'; // Adicionando 
 import PsychologyIcon from '@mui/icons-material/Psychology'; // Adicionando o ícone PsychologyIcon
 import './CustomDrawer.css'; // Importação do arquivo CSS
 import './styles.css';
+import AccountMenu from './AccountMenu'; // Importação do componente AccountMenu
 
 const drawerWidth = 240;
 
@@ -97,7 +98,7 @@ function ResponsiveDrawer(props) {
         {[
           { primary: 'Empresa', subItems: ['Cadastrar Empresa', 'Cadastrar Equipamentos', 'Consultar Empresa'] },
           { primary: 'Técnico', subItems: ['Cadastrar Técnico', 'Configurar Conta'] },
-          { primary: 'Laudo Técnico', subItems: ['Criar Laudo', 'Consultar Laudo'] },
+          { primary: 'Laudo Técnico', subItems: ['Criar Laudo Tecnico','Criar laudo de preventiva', 'Consultar Laudo'] },
           { primary: 'Chamados', subItems: ['Abrir chamado', 'Consultar chamados'] },
           { primary: 'Base de Conhecimento', subItems: ['Publicar artigo','Visualizar Artigos'] },
         ].map((menuItem, index) => (
@@ -154,6 +155,9 @@ function ResponsiveDrawer(props) {
           <Typography variant="h6" noWrap component="div" style={{ color: '#ffffff' }}>
             
           </Typography>
+          {/* Adicione o componente AccountMenu à direita da barra de ferramentas */}
+          <Box sx={{ flexGrow: 1 }} />
+          <AccountMenu />
         </Toolbar>
       </AppBar>
       <Box
