@@ -18,14 +18,15 @@ import Typography from '@mui/material/Typography';
 import AddHomeIcon from '@mui/icons-material/AddHome';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
-import CadastrarEmpresa from './CadastrarEmpresa'; // Importação do componente CadastrarEmpresaTextField
+import CadastrarEmpresa from './CadastrarEmpresa';
 import CadastrarEquipamentos from './CadastrarEquipamentos';
-import CustomizedTables from './CustomizedTables'; // Importação do componente CustomizedTables
-import SupportAgentIcon from '@mui/icons-material/SupportAgent'; // Adicionando o ícone SupportAgentIcon
-import PsychologyIcon from '@mui/icons-material/Psychology'; // Adicionando o ícone PsychologyIcon
-import './CustomDrawer.css'; // Importação do arquivo CSS
+import CustomizedTables from './CustomizedTables';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import PsychologyIcon from '@mui/icons-material/Psychology';
+import './CustomDrawer.css';
 import './styles.css';
-import AccountMenu from './AccountMenu'; // Importação do componente AccountMenu
+import AccountMenu from './AccountMenu';
+import Home from './Home'; // Importe o componente Home aqui
 
 const drawerWidth = 240;
 
@@ -34,9 +35,7 @@ function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState({});
-  const [showCadastrarEmpresa, setShowCadastrarEmpresa] = useState(false);
-  const [showCadastrarEquipamentos, setShowCadastrarEquipamentos] = useState(false);
-  const [showConsultarEmpresa, setShowConsultarEmpresa] = useState(false); // Adicionando estado para controlar a exibição da tabela
+  const [selectedSubItem, setSelectedSubItem] = useState(null);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -58,39 +57,25 @@ function ResponsiveDrawer(props) {
       ...prevExpanded,
       [category]: !prevExpanded[category],
     }));
-    // Esconder o campo de Cadastrar Empresa se outra categoria for clicada
-    setShowCadastrarEmpresa(false);
-    setShowCadastrarEquipamentos(false);
-    setShowConsultarEmpresa(false); // Fechar a tabela ao clicar em outra categoria
   };
 
   const handleSubItemClick = (subItem) => {
-    if (subItem === 'Cadastrar Empresa') {
-      setShowCadastrarEmpresa(true);
-      setShowCadastrarEquipamentos(false);
-      setShowConsultarEmpresa(false); // Fechar a tabela ao clicar em "Cadastrar Empresa"
-    } else if (subItem === 'Cadastrar Equipamentos') {
-      setShowCadastrarEmpresa(false);
-      setShowCadastrarEquipamentos(true);
-      setShowConsultarEmpresa(false); // Fechar a tabela ao clicar em "Cadastrar Equipamentos"
-    } else if (subItem === 'Consultar Empresa') {
-      setShowCadastrarEmpresa(false);
-      setShowCadastrarEquipamentos(false);
-      setShowConsultarEmpresa(true); // Abrir a tabela ao clicar em "Consultar Empresa"
-    } else {
-      setShowCadastrarEmpresa(false);
-      setShowCadastrarEquipamentos(false);
-      setShowConsultarEmpresa(false);
-    }
+    setSelectedSubItem(subItem);
+  };
+
+  const handleHomeClick = () => {
+    setSelectedSubItem(null); // Fechar a tela Home apenas se já estiver aberta
   };
 
   const drawer = (
     <div>
       <Toolbar style={{ position: 'relative' }}>
         <div style={{ position: 'absolute', left: '0', top: '0', width: '100%', height: '100%', background: '#1393cc', padding: '10px', borderRadius: '0px' }}></div>
-        <Typography variant="h6" noWrap component="div" style={{ position: 'absolute', left: '73px', top: '50%', transform: 'translateY(-50%)', color: 'white' }}>
-          Stratus Telecom
-        </Typography>
+        <ListItemButton onClick={handleHomeClick}>
+          <Typography variant="h6" noWrap component="div" style={{ position: 'absolute', left: '46px', top: '50%', transform: 'translateY(-50%)', color: 'white' }}>
+            Stratus Telecom
+          </Typography>
+        </ListItemButton>
         <img src="/src/img/images.png" alt="Logo da Empresa" style={{ width: '23%', top: '0%', maxHeight: '90px', position: 'absolute', left: '15px' }} />
       </Toolbar>
       <Divider />
@@ -155,7 +140,6 @@ function ResponsiveDrawer(props) {
           <Typography variant="h6" noWrap component="div" style={{ color: '#ffffff' }}>
             
           </Typography>
-          {/* Adicione o componente AccountMenu à direita da barra de ferramentas */}
           <Box sx={{ flexGrow: 1 }} />
           <AccountMenu />
         </Toolbar>
@@ -165,8 +149,8 @@ function ResponsiveDrawer(props) {
         sx={{
           width: { sm: drawerWidth },
           flexShrink: { sm: 0 },
-          overflowX: 'auto', // Adicionando overflow-x: auto para permitir rolagem horizontal
-          '&::-webkit-scrollbar': { // Estilizando a barra de rolagem apenas para navegadores WebKit (Chrome, Safari, etc.)
+          overflowX: 'auto',
+          '&::-webkit-scrollbar': {
             height: '12px',
           },
           '&::-webkit-scrollbar-thumb': {
@@ -213,11 +197,11 @@ function ResponsiveDrawer(props) {
         <Typography paragraph>
         </Typography>
       </Box>
-      {/* Renderizar CadastrarEmpresaTextField ou CadastrarEquipamentos apenas se showCadastrarEmpresa ou showCadastrarEquipamentos for verdadeiro */}
       <Box className="container-cadastrar-empresa">
-        {showCadastrarEmpresa && <CadastrarEmpresa />}
-        {showCadastrarEquipamentos && <CadastrarEquipamentos />}
-        {showConsultarEmpresa && <CustomizedTables />} {/* Renderizar a tabela quando showConsultarEmpresa for verdadeiro */}
+        {selectedSubItem === null && <Home />}
+        {selectedSubItem === 'Cadastrar Empresa' && <CadastrarEmpresa />}
+        {selectedSubItem === 'Cadastrar Equipamentos' && <CadastrarEquipamentos />}
+        {selectedSubItem === 'Consultar Empresa' && <CustomizedTables />}
       </Box>
     </Box>
   );

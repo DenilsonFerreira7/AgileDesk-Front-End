@@ -1,10 +1,7 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
+import React, { useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
+import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
@@ -12,76 +9,12 @@ import Button from '@mui/material/Button';
 import Pagination from '@mui/material/Pagination';
 import axios from 'axios';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-    textAlign: 'center',
-    fontSize: 14,
-    width: '25%', // Definindo largura fixa para cada célula
-    position: 'sticky', // Tornando o cabeçalho sticky
-    top: 0, // Definindo a posição superior para 0
-    zIndex: 1000, // Ajustando o índice z para manter acima de outros elementos
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-    textAlign: 'center',
-    width: '25%', // Definindo largura fixa para cada célula
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
-
-const ResponsiveTableContainer = styled(TableContainer)({
-  overflowX: 'auto', // Adicionando overflow-x: auto para permitir rolagem horizontal
-  height: '500px', // Defina uma altura fixa para a tabela
-  '@media (max-width: 412px) and (max-height: 491px)': { // Adicionando regra de mídia para dimensões específicas
-    overflowX: 'auto', // Adicionando overflow-x: auto quando a largura e altura forem menores que 412 x 491 pixels
-  },
-});
-
-const Title = styled('h2')({
-  textAlign: 'center',
-  margin: '2px 0',
-  fontSize: '1.5rem',
-  color: '#333',
-  fontWeight: 'normal',
-});
-
-const empresasData = [
-  {
-    empresaId: 1,
-    nomeEmpresa: 'Empresa A',
-    endereco: 'Rua A, 123',
-    telefone: '123-456-7890',
-  },
-  {
-    empresaId: 2,
-    nomeEmpresa: 'Empresa B',
-    endereco: 'Rua B, 456',
-    telefone: '987-654-3210',
-  },
-  {
-    empresaId: 3,
-    nomeEmpresa: 'Empresa C',
-    endereco: 'Rua C, 789',
-    telefone: '456-789-0123',
-  },
-];
-
-export default function ConsultarEmpresasTable() {
-  const [empresas, setEmpresas] = useState(empresasData);
+const ConsultarEmpresasTable = () => {
+  const [empresas, setEmpresas] = useState([]);
   const [empresaSelecionada, setEmpresaSelecionada] = useState(null);
   const [equipamentos, setEquipamentos] = useState([]);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10); // Define a quantidade de linhas por página
+  const [rowsPerPage, setRowsPerPage] = useState(4);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
@@ -95,7 +28,7 @@ export default function ConsultarEmpresasTable() {
   }, []);
 
   const handleConsultarClick = (empresaId) => {
-    axios.get(`http://localhost:8080/empresas/${empresaId}/equipamentos/consultar`)
+    axios.get(`http://localhost:8080/empresa/${empresaId}/equipamento/consultar`)
       .then(response => {
         setEmpresaSelecionada(empresaId);
         setEquipamentos(response.data);
@@ -111,93 +44,98 @@ export default function ConsultarEmpresasTable() {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(1); // Voltar para a primeira página ao alterar o número de linhas por página
-    setTotalPages(Math.ceil(equipamentos.length / rowsPerPage));
+    const newRowsPerPage = parseInt(event.target.value, 10);
+    setRowsPerPage(newRowsPerPage);
+    setPage(1);
+    setTotalPages(Math.ceil(equipamentos.length / newRowsPerPage));
   };
 
   return (
     <div>
       {empresaSelecionada && (
-        <Paper sx={{ marginBottom: '-60px', padding: '20px', backgroundColor: '#F0F8FF' }}>
-          <Title>Detalhes da Empresa</Title>
-          {empresas.map((empresa) => {
-            if (empresa.empresaId === empresaSelecionada) {
-              return (
-                <div key={empresa.empresaId}>
-                  <p style={{ marginBottom: '10px', fontSize: '1.0rem' }}>Nome: {empresa.nomeEmpresa}</p>
-                  <p style={{ marginBottom: '10px', fontSize: '1.0rem' }}>Telefone: {empresa.telefone}</p>
-                  <p style={{ marginBottom: '10px', fontSize: '1.0rem' }}>Endereço: {empresa.endereco}</p>
-                </div>
-              );
-            }
-          })}
-          <Title>Equipamentos Registrados</Title>
-          <ResponsiveTableContainer sx={{ minWidth: '100%' }}>
+        <Paper sx={{ marginBottom: '-60px', padding: '15px', backgroundColor: '#F8F8FF', marginLeft: '0px', marginRight: '0px', position: 'relative' }}>
+          <h2 style={{ textAlign: 'center', margin: '2px -15px', fontSize: '1.3rem', color: '#FCFCFC', fontWeight: 'normal', backgroundColor: '#3075BA' }}>Detalhes da Empresa</h2>
+          {empresas.map((empresa) => (
+            empresa.empresaId === empresaSelecionada && (
+              <div key={empresa.empresaId}>
+                <p style={{ marginBottom: '10px', fontSize: '0.8rem', fontWeight: 'bold' }}>Nome: {empresa.nomeEmpresa}</p>
+                <p style={{ marginBottom: '10px', fontSize: '0.8rem', fontWeight: 'bold' }}>Telefone: {empresa.telefone}</p>
+                <p style={{ marginBottom: '10px', fontSize: '0.8rem', fontWeight: 'bold' }}>Endereço: {empresa.endereco}</p>
+              </div>
+            )
+          ))}
+          <h2 style={{ textAlign: 'center', margin: '2px -15px', fontSize: '1.3rem', color: '#FCFCFC', fontWeight: 'normal', backgroundColor: '#3075BA' }}>Equipamentos Registrados</h2>
+          <div style={{ overflowX: 'auto', maxHeight: '400px' }}>
             <Table aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Nome Equipamento</StyledTableCell>
-                  <StyledTableCell>Descrição</StyledTableCell>
-                  <StyledTableCell>Setor</StyledTableCell> {/* Adicionando célula para o setor */}
+                 <TableCell align="center" sx={{ fontFamily: 'Arial', fontWeight: 'bold' }}>Nome Equipamento</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: 'bold' }}>Descrição</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: 'bold' }}>Setor</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: 'bold' }}>Equipamento</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: 'bold' }}>Acesso Remoto</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: 'bold' }}>Senha Remoto</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {equipamentos.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage).map((equipamento) => (
-                  <StyledTableRow key={equipamento.id}>
-                    <StyledTableCell>{equipamento.nomeEquipamento}</StyledTableCell>
-                    <StyledTableCell>{equipamento.descricao}</StyledTableCell>
-                    <StyledTableCell>{equipamento.setor}</StyledTableCell> {/* Renderizando o setor */}
-                  </StyledTableRow>
+                {equipamentos.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage).map((equipamento, index) => (
+                  <TableRow key={index}>
+                    <TableCell align="center">{equipamento.nomeEquipamento}</TableCell>
+                    <TableCell align="center">{equipamento.descricao}</TableCell>
+                    <TableCell align="center">{equipamento.setor}</TableCell>
+                    <TableCell align="center">{equipamento.tipoEquipamento.nomeEquipamento}</TableCell>
+                    <TableCell align="center">{equipamento.acessoRemoto}</TableCell>
+                    <TableCell align="center">{equipamento.senhaRemoto}</TableCell>
+                  </TableRow>
                 ))}
               </TableBody>
             </Table>
-          </ResponsiveTableContainer>
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={handleChangePage}
-            color="primary"
-            sx={{ marginTop: '20px', justifyContent: 'center' }}
-          />
-          <Button onClick={() => setEmpresaSelecionada(null)} variant="contained" color="primary" sx={{ marginTop: '10px' }}>
+          </div>
+          <Button onClick={() => setEmpresaSelecionada(null)} variant="contained" color="primary" style={{ marginTop: '10px' }}>
             Voltar
           </Button>
         </Paper>
       )}
       {!empresaSelecionada && (
-        <Paper>
-          <Title>Empresas Cadastradas</Title>
-          <ResponsiveTableContainer sx={{ minWidth: '100%' }}>
+        <Paper style={{ maxHeight: '400px', overflowY: 'auto', marginLeft: '0px', marginRight: '0px', backgroundColor: '#F8F8FF' }}>
+          <h2 style={{ textAlign: 'center', margin: '0px 0', fontSize: '1.3rem', color: '#FCFCFC', fontWeight: 'normal', backgroundColor: '#3075BA' }}>Empresas Cadastradas</h2>
+          <div style={{ overflowX: 'auto' }}>
             <Table aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Nome Empresa</StyledTableCell>
-                  <StyledTableCell>Endereço</StyledTableCell>
-                  <StyledTableCell>Telefone</StyledTableCell>
-                  <StyledTableCell>Detalhes</StyledTableCell>
+                  <TableCell align="center"sx={{ fontWeight: 'bold' }}>Nome Empresa</TableCell>
+                  <TableCell align="center"sx={{ fontWeight: 'bold' }}>Endereço</TableCell>
+                  <TableCell align="center"sx={{ fontWeight: 'bold' }}>Telefone</TableCell>
+                  <TableCell align="center"sx={{ fontWeight: 'bold' }}>Detalhes</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {empresas.map((empresa) => (
-                  <StyledTableRow key={empresa.empresaId}>
-                    <StyledTableCell component="th" scope="row">
-                      {empresa.nomeEmpresa}
-                    </StyledTableCell>
-                    <StyledTableCell>{empresa.endereco}</StyledTableCell>
-                    <StyledTableCell>{empresa.telefone}</StyledTableCell>
-                    <StyledTableCell>
+                {empresas.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage).map((empresa) => (
+                  <TableRow key={empresa.empresaId}>
+                    <TableCell align="center" component="th" scope="row">{empresa.nomeEmpresa}</TableCell>
+                    <TableCell align="center">{empresa.endereco}</TableCell>
+                    <TableCell align="center">{empresa.telefone}</TableCell>
+                    <TableCell align="center">
                       <Button onClick={() => handleConsultarClick(empresa.empresaId)} variant="contained" color="primary">
                         Detalhar
                       </Button>
-                    </StyledTableCell>
-                  </StyledTableRow>
+                    </TableCell>
+                  </TableRow>
                 ))}
               </TableBody>
             </Table>
-          </ResponsiveTableContainer>
+          </div>
+          <Pagination
+            count={Math.ceil(empresas.length / rowsPerPage)}
+            page={page}
+            onChange={handleChangePage}
+            color="primary"
+            style={{ marginTop: '20px', justifyContent: 'center', position: 'sticky', bottom: '0', backgroundColor: '#F8F8FF' }}
+          />
         </Paper>
       )}
     </div>
   );
-}
+};
+
+export default ConsultarEmpresasTable;

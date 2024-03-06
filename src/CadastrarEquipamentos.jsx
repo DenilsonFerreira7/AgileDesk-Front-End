@@ -135,7 +135,7 @@ export default function CadastrarEquipamentos() {
         senhaRemoto: equipamentoData.senhaRemoto
       };
   
-      const response = await axios.post(`http://localhost:8080/empresas/${selectedEmpresa}/equipamentos/cadastrar?tipoEquipamentoId=${selectedTipoEquipamentoId}`, dataToSend);
+      const response = await axios.post(`http://localhost:8080/empresa/${selectedEmpresa}/equipamento/cadastrar?tipoEquipamentoId=${selectedTipoEquipamentoId}`, dataToSend);
   
       limparCampos();
   
