@@ -14,8 +14,10 @@ import Slide from '@mui/material/Slide';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import './CSS/CadastrarEquipamentoForm.css'; // Importação do arquivo CSS
 
-export default function CadastrarEquipamentos() {
+
+const CadastrarEquipamentos = () => {
   const [empresas, setEmpresas] = useState([]);
   const [selectedEmpresa, setSelectedEmpresa] = useState('');
   const [selectedSetor, setSelectedSetor] = useState('');
@@ -88,7 +90,7 @@ export default function CadastrarEquipamentos() {
   const handleTipoEquipamentoChange = (e) => {
     const selectedTipo = e.target.value;
     setSelectedTipoEquipamento(selectedTipo);
-    const selectedTipoId = tiposEquipamento.find(tipo => tipo.nomeEquipamento === selectedTipo)?.tipoEquipamentoId; // Corrigido para pegar o ID diretamente
+    const selectedTipoId = tiposEquipamento.find(tipo => tipo.nomeEquipamento === selectedTipo)?.tipoEquipamentoId;
     setSelectedTipoEquipamentoId(selectedTipoId);
   };
 
@@ -104,7 +106,6 @@ export default function CadastrarEquipamentos() {
   };
 
   const limparCampos = () => {
-    console.log('Limpando campos...'); // Adicionando console.log para verificar se a função é chamada
     setSelectedEmpresa('');
     setSelectedTipoEquipamento('');
     setSelectedTipoEquipamentoId('');
@@ -145,6 +146,7 @@ export default function CadastrarEquipamentos() {
       console.error('Erro ao cadastrar equipamento:', error);
     }
   };
+  
   const exibirAlerta = (mensagem, severidade) => {
     setAlertMessage(mensagem);
     setAlertSeverity(severidade);
@@ -158,35 +160,12 @@ export default function CadastrarEquipamentos() {
 
   return (
     <Box>
-      <Box
-        component="form"
-        sx={{
-          '& > :not(style)': { m: 2 },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <Typography variant="h4" gutterBottom style={{ fontSize: 'clamp(16px, 5vw, 24px)', textAlign: 'center' }}>
+      <Box className="form-container">
+        <Typography variant="h4" className="form-title" gutterBottom>
           Cadastre um novo equipamento
         </Typography>
 
-        <Stack spacing={1} sx={{ position: 'fixed', top: theme.spacing(-12), left: theme.spacing(3), zIndex: theme.zIndex.drawer + 2 }}>
-          <Slide direction="down" in={alertOpen} mountOnEnter unmountOnExit>
-            <Alert variant="filled" severity={alertSeverity} sx={{ height: '50px',
-              position: 'fixed',
-              bottom: 16,
-              top:-100,
-              left: '0%',
-              width: '100%',
-              transform: 'translateX(-50%)',
-              zIndex: 999 
-            }}>
-              {alertMessage}
-            </Alert>
-          </Slide>
-        </Stack>
-
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Stack spacing={1} className="form-fields-container">
           <TextField
             id="setor"
             name="setor"
@@ -327,15 +306,33 @@ export default function CadastrarEquipamentos() {
               value={equipamentoData.descricao}
               onChange={handleInputChange}
               fullWidth
-              disabled={selectedTipoEquipamento !== 'RACK' && selectedTipoEquipamento !== 'IMPRESSORA'} // Corrigido para habilitar apenas quando o tipo de equipamento for RACK ou IMPRESSORA
-              sx={{ m: 1, width: '40ch' }} // Estilo para a descrição
+              disabled={selectedTipoEquipamento !== 'RACK' && selectedTipoEquipamento !== 'IMPRESSORA'}
+              sx={{ m: 1, width: '40ch' }}
             />
           )}
           <Button type="button" onClick={handleCadastrarEquipamentoClick} variant="contained" endIcon={<SendIcon />}>
             CADASTRAR
           </Button>
-        </Box>
+        </Stack>
+
+        <Stack spacing={1} sx={{ position: 'fixed', top: theme.spacing(-12), left: theme.spacing(3), zIndex: theme.zIndex.drawer + 2 }}>
+          <Slide direction="down" in={alertOpen} mountOnEnter unmountOnExit>
+            <Alert variant="filled" severity={alertSeverity} sx={{ height: '50px',
+              position: 'fixed',
+              bottom: 16,
+              top:-100,
+              left: '0%',
+              width: '100%',
+              transform: 'translateX(-50%)',
+              zIndex: 999 
+            }}>
+              {alertMessage}
+            </Alert>
+          </Slide>
+        </Stack>
       </Box>
     </Box>
   );
-}
+};
+
+export default CadastrarEquipamentos;

@@ -1,0 +1,20 @@
+/* stylesTable.css */
+
+.table-header-cell {
+  background-color: #1290cb; /* Altera a cor de fundo do cabeçalho da tabela */
+  color: #ffffff !important; /* Altera a cor do texto no cabeçalho da tabela */
+  }
+  .company-header {
+    background-color: #6595f6; /* Cor de fundo para o cabeçalho com os dados da empresa */
+    color: #ffffff !important; /* Cor do texto no cabeçalho da tabela */
+
+    padding: 10px; /* Espaçamento interno */
+    font-weight: bold; /* Deixa o texto em negrito */
+    font-size: 16px; /* Tamanho do texto */
+  }
+
+  .table-container {
+    width: 80%;
+    margin-left: 400px;
+  }
+  

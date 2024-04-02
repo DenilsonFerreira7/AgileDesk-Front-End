@@ -1,0 +1,23 @@
+/* laudotecnico.css */
+
+.title {
+  text-align: center;
+  margin-top: 20px; /* Espaço entre o título e o formulário */
+  font-size: 24px; /* Tamanho da fonte ajustado */
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px; /* Largura do formulário */
+}
+
+.inputField {
+  width: 100%;
+  margin-bottom: 16px; /* Espaço entre os campos */
+}
+
+.button {
+  width: 50%;
+}
