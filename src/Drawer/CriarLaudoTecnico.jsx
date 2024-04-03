@@ -11,46 +11,15 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import Checkbox from '@mui/material/Checkbox';
-import ListItemText from '@mui/material/ListItemText';
-
-const MultipleSelectCheckmarks = ({ equipamentos, handleEquipamentosChange }) => {
-  const [selectedEquipamentos, setSelectedEquipamentos] = useState([]);
-
-  const handleChange = (event) => {
-    setSelectedEquipamentos(event.target.value);
-    handleEquipamentosChange(event.target.value);
-  };
-
-  return (
-    <FormControl sx={{ m: 1, width: 300 }}>
-      <InputLabel id="demo-multiple-checkbox-label">Equipamentos</InputLabel>
-      <Select
-        labelId="demo-multiple-checkbox-label"
-        id="demo-multiple-checkbox"
-        multiple
-        value={selectedEquipamentos}
-        onChange={handleChange}
-        input={<OutlinedInput label="Equipamentos" />}
-        renderValue={(selected) => selected.map((equipamento) => equipamento.nome).join(', ')}
-      >
-        {equipamentos.map((equipamento) => (
-          <MenuItem key={equipamento.id} value={equipamento}>
-            <Checkbox checked={selectedEquipamentos.some((selected) => selected.id === equipamento.id)} />
-            <ListItemText primary={equipamento.nome} />
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-  );
-};
 
 const CriarLaudoTecnico = () => {
   const [empresas, setEmpresas] = useState([]);
   const [tecnicos, setTecnicos] = useState([]);
   const [selectedEmpresa, setSelectedEmpresa] = useState('');
   const [selectedTecnico, setSelectedTecnico] = useState('');
-  const [descricao, setDescricao] = useState('');
   const [selectedEquipamentos, setSelectedEquipamentos] = useState([]);
+  const [descricao, setDescricao] = useState('');
+  const [equipamentosDaEmpresa, setEquipamentosDaEmpresa] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:8080/empresa/todas')
@@ -70,19 +39,29 @@ const CriarLaudoTecnico = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (selectedEmpresa) {
+      axios.get(`http://localhost:8080/empresa/${selectedEmpresa}/equipamento/consultar`)
+        .then(response => {
+          setEquipamentosDaEmpresa(response.data);
+        })
+        .catch(error => {
+          console.error('Erro ao buscar equipamentos da empresa:', error);
+        });
+    }
+  }, [selectedEmpresa]);
+
   const handleEmpresaChange = async (e) => {
     const empresaId = e.target.value;
     setSelectedEmpresa(empresaId);
-    try {
-      const response = await axios.get(`http://localhost:8080/empresa/${empresaId}/equipamento/consultar`);
-      setSelectedEquipamentos(response.data);
-    } catch (error) {
-      console.error('Erro ao buscar equipamentos da empresa:', error);
-    }
   };
 
   const handleTecnicoChange = (e) => {
     setSelectedTecnico(e.target.value);
+  };
+
+  const handleEquipamentosChange = (e) => {
+    setSelectedEquipamentos(e.target.value);
   };
 
   const handleInputChange = (e) => {
@@ -90,23 +69,24 @@ const CriarLaudoTecnico = () => {
     setDescricao(value);
   };
 
-  const handleEquipamentosChange = (selectedEquipamentos) => {
-    setSelectedEquipamentos(selectedEquipamentos);
-  };
-
   const handleCadastrarLaudoTecnicoClick = async () => {
     try {
       const data = {
-        empresaId: selectedEmpresa,
-        tecnicoId: selectedTecnico,
-        equipamentoIds: selectedEquipamentos.map((equipamento) => equipamento.id),
+        empresaId: Number(selectedEmpresa),
+        tecnicoId: Number(selectedTecnico),
+        equipamentoIds: selectedEquipamentos.map(equipamento => equipamento.id),
         descricao: descricao
       };
 
-      const response = await axios.post('http://localhost:8080/pdf/laudo', data);
+      const response = await axios.post('http://localhost:8080/pdf/laudo', data, {
+        responseType: 'blob' // Especifica que o tipo de resposta é um blob (PDF)
+      });
 
       if (response.status === 200) {
-        window.open(URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' })));
+        // Cria uma URL para o blob PDF
+        const pdfUrl = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+        // Abre uma nova aba com o URL do PDF
+        window.open(pdfUrl);
       }
     } catch (error) {
       console.error('Erro ao cadastrar laudo técnico:', error);
@@ -155,10 +135,31 @@ const CriarLaudoTecnico = () => {
             </Select>
           </FormControl>
 
-          <MultipleSelectCheckmarks
-            equipamentos={selectedEquipamentos}
-            handleEquipamentosChange={handleEquipamentosChange}
-          />
+          <FormControl sx={{ m: 1, minWidth: 300 }}>
+            <InputLabel id="equipamentos-label">Selecione os Equipamentos</InputLabel>
+            <Select
+              labelId="equipamentos-label"
+              id="equipamentos"
+              multiple
+              value={selectedEquipamentos}
+              onChange={handleEquipamentosChange}
+              input={<OutlinedInput label="Selecione os Equipamentos" />}
+              renderValue={(selected) => (
+                <div>
+                  {selected.map((value) => (
+                    <Typography key={value.id}>{value.nomeEquipamento}</Typography>
+                  ))}
+                </div>
+              )}
+            >
+              {equipamentosDaEmpresa.map((equipamento) => (
+                <MenuItem key={equipamento.id} value={equipamento}>
+                  <Checkbox checked={selectedEquipamentos.some(item => item.id === equipamento.id)} />
+                  {equipamento.nomeEquipamento}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
           <TextField
             id="descricao"
