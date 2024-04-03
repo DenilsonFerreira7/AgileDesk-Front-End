@@ -78,7 +78,7 @@ const CriarLaudoTecnico = () => {
         descricao: descricao
       };
 
-      const response = await axios.post('http://localhost:8080/pdf/laudo', data, {
+      const response = await axios.post('http://localhost:8080/pdf/laudoTecnico', data, {
         responseType: 'blob' // Especifica que o tipo de resposta é um blob (PDF)
       });
 

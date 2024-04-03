@@ -22,7 +22,8 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import stratusLogo from './imgDrawer/stratusLogo.png';
-import CriarLaudoTecnico from './CriarLaudoTecnico'; // Importe a tela CriarLaudoTecnico aqui
+import CriarLaudoTecnico from './CriarLaudoTecnico';
+import CriarLaudoPreventiva from './CriarLaudoPreventiva'; // Importe a tela CriarLaudoPreventiva aqui
 import CadastroEmpresaForm from './CadastroEmpresaForm';
 import CadastrarEquipamentoForm from './CadastrarEquipamentoForm';
 import CadastroTecnicoForm from './CadastroTecnicoForm';
@@ -94,7 +95,7 @@ function getIcon(text) {
 const categories = [
   { name: 'Clientes', subcategories: ['Cadastrar Empresa', 'Cadastrar Equipamentos', 'Consultar Empresas'] },
   { name: 'Técnico', subcategories: ['Cadastrar Técnico'] },
-  { name: 'Laudos', subcategories: ['Laudo de preventiva','Laudo técnico', 'consultar laudos'] }, // Alterado para incluir "Laudo técnico"
+  { name: 'Laudos', subcategories: ['Laudo de preventiva','Laudo técnico', 'consultar laudos'] },
   { name: 'Chamados', subcategories: ['Criar chamados','Andamento de chamados','Historico'] },
   { name: 'Base de conhecimento', subcategories: ['Adicionar conhecimento','Consultar'] }
 ];
@@ -118,8 +119,8 @@ export default function PersistentDrawerLeft() {
   const [cadastroEmpresaOpen, setCadastroEmpresaOpen] = React.useState(false);
   const [cadastroEquipamentoOpen, setCadastroEquipamentoOpen] = React.useState(false);
   const [cadastroTecnicoOpen, setCadastroTecnicoOpen] = React.useState(false);
-  const [criarLaudoTecnicoOpen, setCriarLaudoTecnicoOpen] = React.useState(false); // Adicionei estado para controlar a tela de criar laudo técnico
-  const [showTable, setShowTable] = React.useState(false);
+  const [criarLaudoTecnicoOpen, setCriarLaudoTecnicoOpen] = React.useState(false);
+  const [criarLaudoPreventivaOpen, setCriarLaudoPreventivaOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -140,48 +141,56 @@ export default function PersistentDrawerLeft() {
     setCadastroEmpresaOpen(true);
     setCadastroEquipamentoOpen(false);
     setCadastroTecnicoOpen(false);
-    setCriarLaudoTecnicoOpen(false); // Certifique-se de fechar a tela de criar laudo técnico
-    setShowTable(false);
+    setCriarLaudoTecnicoOpen(false);
+    setCriarLaudoPreventivaOpen(false);
   };
 
   const handleCadastroEquipamentoOpen = () => {
     setCadastroEquipamentoOpen(true);
     setCadastroEmpresaOpen(false);
     setCadastroTecnicoOpen(false);
-    setCriarLaudoTecnicoOpen(false); // Certifique-se de fechar a tela de criar laudo técnico
-    setShowTable(false);
+    setCriarLaudoTecnicoOpen(false);
+    setCriarLaudoPreventivaOpen(false);
   };
 
   const handleCadastroTecnicoOpen = () => {
     setCadastroTecnicoOpen(true);
     setCadastroEmpresaOpen(false);
     setCadastroEquipamentoOpen(false);
-    setCriarLaudoTecnicoOpen(false); // Certifique-se de fechar a tela de criar laudo técnico
-    setShowTable(false);
+    setCriarLaudoTecnicoOpen(false);
+    setCriarLaudoPreventivaOpen(false);
   };
 
   const handleConsultarEmpresasOpen = () => {
     setCadastroEmpresaOpen(false);
     setCadastroEquipamentoOpen(false);
     setCadastroTecnicoOpen(false);
-    setCriarLaudoTecnicoOpen(false); // Certifique-se de fechar a tela de criar laudo técnico
-    setShowTable(true);
+    setCriarLaudoTecnicoOpen(false);
+    setCriarLaudoPreventivaOpen(false);
   };
 
   const handleCriarLaudoTecnicoOpen = () => {
-    setCriarLaudoTecnicoOpen(true); // Abre a tela de criar laudo técnico
+    setCriarLaudoTecnicoOpen(true);
     setCadastroEmpresaOpen(false);
     setCadastroEquipamentoOpen(false);
     setCadastroTecnicoOpen(false);
-    setShowTable(false);
+    setCriarLaudoPreventivaOpen(false);
+  };
+
+  const handleCriarLaudoPreventivaOpen = () => {
+    setCriarLaudoPreventivaOpen(true);
+    setCadastroEmpresaOpen(false);
+    setCadastroEquipamentoOpen(false);
+    setCadastroTecnicoOpen(false);
+    setCriarLaudoTecnicoOpen(false);
   };
 
   const handleFormClose = () => {
     setCadastroEmpresaOpen(false);
     setCadastroEquipamentoOpen(false);
     setCadastroTecnicoOpen(false);
-    setCriarLaudoTecnicoOpen(false); // Certifique-se de fechar a tela de criar laudo técnico
-    setShowTable(false);
+    setCriarLaudoTecnicoOpen(false);
+    setCriarLaudoPreventivaOpen(false);
   };
 
   return (
@@ -241,7 +250,9 @@ export default function PersistentDrawerLeft() {
                         } else if (subText === 'Cadastrar Técnico') {
                           handleCadastroTecnicoOpen();
                         } else if (subText === 'Laudo técnico') {
-                          handleCriarLaudoTecnicoOpen(); // Chama a função para exibir a tela de criar laudo técnico
+                          handleCriarLaudoTecnicoOpen();
+                        } else if (subText === 'Laudo de preventiva') {
+                          handleCriarLaudoPreventivaOpen();
                         }
                       }}>
                         <ListItemText primary={subText} />
@@ -256,13 +267,13 @@ export default function PersistentDrawerLeft() {
         <Divider />
       </Drawer>
       <Main open={open}>
-        {showTable && <StickyHeadTable />}
-        {(cadastroEmpresaOpen || cadastroEquipamentoOpen || cadastroTecnicoOpen || criarLaudoTecnicoOpen) && ( // Alterado para incluir criarLaudoTecnicoOpen
+        {criarLaudoTecnicoOpen && <CriarLaudoTecnico onClose={handleFormClose} />}
+        {criarLaudoPreventivaOpen && <CriarLaudoPreventiva onClose={handleFormClose} />} {/* Renderize a tela de criar laudo preventiva se criarLaudoPreventivaOpen for verdadeiro */}
+        {(cadastroEmpresaOpen || cadastroEquipamentoOpen || cadastroTecnicoOpen) && (
           <TextContainer>
             {cadastroEmpresaOpen && <CadastroEmpresaForm onClose={handleFormClose} />}
             {cadastroEquipamentoOpen && <CadastrarEquipamentoForm onClose={handleFormClose} />}
             {cadastroTecnicoOpen && <CadastroTecnicoForm onClose={handleFormClose} />}
-            {criarLaudoTecnicoOpen && <CriarLaudoTecnico onClose={handleFormClose} />} {/* Renderize a tela de criar laudo técnico se criarLaudoTecnicoOpen for verdadeiro */}
           </TextContainer>
         )}
       </Main>
