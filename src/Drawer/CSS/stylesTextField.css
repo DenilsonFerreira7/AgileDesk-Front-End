@@ -1,55 +1,43 @@
+/* stylesTextField.css */
+
 .formContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Alinha o container à esquerda */
-    justify-content: center;
-    height: 10vh;
-    text-align: center; /* Centraliza o conteúdo horizontalmente */
-
-  }
-  
-  .formTitle {
-    margin-bottom: 20px; /* Adiciona um espaço entre o título e os campos do formulário */
-  }
-  
-  .form {
-    width: 400px;
-    text-align: center;
-  }
-
-
-.form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinha o container à esquerda */
+  justify-content: center;
+  height: 10vh;
+  text-align: center; /* Centraliza o conteúdo horizontalmente */
 }
 
-.formContainer {
-    width: 100%;
+.formTitle {
+  margin-bottom: 20px; /* Adiciona um espaço entre o título e os campos do formulário */
+}
+
+.form {
+  width: 400px;
+  text-align: center;
 }
 
 .textField {
-    width: 100%;
-    margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .move-left {
-  margin-left: 800px; /* Ajuste o valor negativo conforme necessário */
-  
+  margin-left: 750px; /* Ajuste o valor negativo conforme necessário */
 }
-
 
 @media (min-width: 412px) and (max-width: 914px) {
   .move-left {
-    margin-left: 300px; /* Espaço em branco à esquerda para tela 412x914 */
-.form {
+    margin-left: 60px; /* Espaço em branco à esquerda para tela 412x914 */
+  }
+  
+  .form {
     width: 240px;
     text-align: center;
   }
-}
-  .formContainer{
+
+  .formContainer {
     margin-top: -50%;
   }
 }

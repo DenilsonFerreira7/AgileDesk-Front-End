@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import Checkbox from '@mui/material/Checkbox';
-
 import './CSS/laudotecnico.css'; // Importação do arquivo CSS
 
 const CriarLaudoPreventiva = () => {
@@ -87,6 +86,11 @@ const CriarLaudoPreventiva = () => {
       if (response.status === 200) {
         const pdfUrl = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
         window.open(pdfUrl);
+        // Limpar os campos após cadastrar o laudo
+        setSelectedEmpresa('');
+        setSelectedTecnico('');
+        setSelectedEquipamentos([]);
+        setDescricao('');
       }
     } catch (error) {
       console.error('Erro ao cadastrar laudo preventiva:', error);

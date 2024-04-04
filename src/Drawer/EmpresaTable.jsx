@@ -34,6 +34,12 @@ export default function EmpresaTable() {
     setShowEquipamentos(true);
   }
 
+  const handleConsultarEmpresasOpen = () => {
+    // Reseta os estados para exibir a tabela de empresas novamente
+    setSelectedEmpresa(null);
+    setShowEquipamentos(false);
+  };
+
   return (
     <div>
       {!showEquipamentos && (
@@ -51,7 +57,7 @@ export default function EmpresaTable() {
             <TableBody>
               {empresas.map((empresa) => (
                 <TableRow key={empresa.empresaId}>
-                  <TableCell component="th" scope="row" style={{ paddingRight: '10px' }}>
+                  <TableCell component="th" scope="row" style={{ }}>
                     {empresa.nomeEmpresa}
                   </TableCell>
                   <TableCell align="left">{empresa.endereco}</TableCell>

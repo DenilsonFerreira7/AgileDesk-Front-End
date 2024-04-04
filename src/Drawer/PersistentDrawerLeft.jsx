@@ -23,11 +23,11 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import stratusLogo from './imgDrawer/stratusLogo.png';
 import CriarLaudoTecnico from './CriarLaudoTecnico';
-import CriarLaudoPreventiva from './CriarLaudoPreventiva'; // Importe a tela CriarLaudoPreventiva aqui
+import CriarLaudoPreventiva from './CriarLaudoPreventiva'; 
 import CadastroEmpresaForm from './CadastroEmpresaForm';
 import CadastrarEquipamentoForm from './CadastrarEquipamentoForm';
 import CadastroTecnicoForm from './CadastroTecnicoForm';
-import StickyHeadTable from './StickyHeadTable';
+import EmpresaTable from './EmpresaTable';
 import './CSS/stylesDrawer.css';
 import './CSS/stylesTextField.css';
 
@@ -121,6 +121,7 @@ export default function PersistentDrawerLeft() {
   const [cadastroTecnicoOpen, setCadastroTecnicoOpen] = React.useState(false);
   const [criarLaudoTecnicoOpen, setCriarLaudoTecnicoOpen] = React.useState(false);
   const [criarLaudoPreventivaOpen, setCriarLaudoPreventivaOpen] = React.useState(false);
+  const [consultarEmpresasOpen, setConsultarEmpresasOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -143,6 +144,7 @@ export default function PersistentDrawerLeft() {
     setCadastroTecnicoOpen(false);
     setCriarLaudoTecnicoOpen(false);
     setCriarLaudoPreventivaOpen(false);
+    setConsultarEmpresasOpen(false);
   };
 
   const handleCadastroEquipamentoOpen = () => {
@@ -151,6 +153,7 @@ export default function PersistentDrawerLeft() {
     setCadastroTecnicoOpen(false);
     setCriarLaudoTecnicoOpen(false);
     setCriarLaudoPreventivaOpen(false);
+    setConsultarEmpresasOpen(false);
   };
 
   const handleCadastroTecnicoOpen = () => {
@@ -159,9 +162,11 @@ export default function PersistentDrawerLeft() {
     setCadastroEquipamentoOpen(false);
     setCriarLaudoTecnicoOpen(false);
     setCriarLaudoPreventivaOpen(false);
+    setConsultarEmpresasOpen(false);
   };
 
   const handleConsultarEmpresasOpen = () => {
+    setConsultarEmpresasOpen(true);
     setCadastroEmpresaOpen(false);
     setCadastroEquipamentoOpen(false);
     setCadastroTecnicoOpen(false);
@@ -175,6 +180,7 @@ export default function PersistentDrawerLeft() {
     setCadastroEquipamentoOpen(false);
     setCadastroTecnicoOpen(false);
     setCriarLaudoPreventivaOpen(false);
+    setConsultarEmpresasOpen(false);
   };
 
   const handleCriarLaudoPreventivaOpen = () => {
@@ -183,6 +189,7 @@ export default function PersistentDrawerLeft() {
     setCadastroEquipamentoOpen(false);
     setCadastroTecnicoOpen(false);
     setCriarLaudoTecnicoOpen(false);
+    setConsultarEmpresasOpen(false);
   };
 
   const handleFormClose = () => {
@@ -191,6 +198,7 @@ export default function PersistentDrawerLeft() {
     setCadastroTecnicoOpen(false);
     setCriarLaudoTecnicoOpen(false);
     setCriarLaudoPreventivaOpen(false);
+    setConsultarEmpresasOpen(false);
   };
 
   return (
@@ -266,9 +274,11 @@ export default function PersistentDrawerLeft() {
         </List>
         <Divider />
       </Drawer>
-      <Main open={open}>
+      <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
+        <Toolbar />
         {criarLaudoTecnicoOpen && <CriarLaudoTecnico onClose={handleFormClose} />}
-        {criarLaudoPreventivaOpen && <CriarLaudoPreventiva onClose={handleFormClose} />} {/* Renderize a tela de criar laudo preventiva se criarLaudoPreventivaOpen for verdadeiro */}
+        {criarLaudoPreventivaOpen && <CriarLaudoPreventiva onClose={handleFormClose} />} 
+        {consultarEmpresasOpen && <EmpresaTable />} 
         {(cadastroEmpresaOpen || cadastroEquipamentoOpen || cadastroTecnicoOpen) && (
           <TextContainer>
             {cadastroEmpresaOpen && <CadastroEmpresaForm onClose={handleFormClose} />}
@@ -276,7 +286,7 @@ export default function PersistentDrawerLeft() {
             {cadastroTecnicoOpen && <CadastroTecnicoForm onClose={handleFormClose} />}
           </TextContainer>
         )}
-      </Main>
+      </Box>
     </Box>
   );
 }

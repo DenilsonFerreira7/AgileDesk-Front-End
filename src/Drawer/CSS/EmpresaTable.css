@@ -5,7 +5,7 @@
   color: #ffffff !important; /* Altera a cor do texto no cabeçalho da tabela */
   }
   .company-header {
-    background-color: #6595f6; /* Cor de fundo para o cabeçalho com os dados da empresa */
+    background-color: #0e709d; /* Cor de fundo para o cabeçalho com os dados da empresa */
     color: #ffffff !important; /* Cor do texto no cabeçalho da tabela */
 
     padding: 10px; /* Espaçamento interno */
@@ -15,6 +15,14 @@
 
   .table-container {
     width: 80%;
-    margin-left: 400px;
+    margin-left: 380px;
   }
+  @media (min-width: 412px) and (max-width: 914px) {
+    .table-container {
+      width: 80%;
+      margin-left: 4px;
+      margin-right: 200px; /* Adicione uma margem direita apenas em telas maiores */
+
+  }
+}
   

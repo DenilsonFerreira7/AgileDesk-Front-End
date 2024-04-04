@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import Checkbox from '@mui/material/Checkbox';
+import './CSS/laudotecnico.css'; // Importação do arquivo CSS
 
 const CriarLaudoTecnico = () => {
   const [empresas, setEmpresas] = useState([]);
@@ -87,6 +88,11 @@ const CriarLaudoTecnico = () => {
         const pdfUrl = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
         // Abre uma nova aba com o URL do PDF
         window.open(pdfUrl);
+        // Limpar os campos após o cadastro
+        setSelectedEmpresa('');
+        setSelectedTecnico('');
+        setSelectedEquipamentos([]);
+        setDescricao('');
       }
     } catch (error) {
       console.error('Erro ao cadastrar laudo técnico:', error);
@@ -101,7 +107,7 @@ const CriarLaudoTecnico = () => {
         </Typography>
 
         <Box className="form-fields-container">
-          <FormControl sx={{ m: 1, minWidth: 300 }}>
+          <FormControl sx={{ m: 1, minWidth: 300 }} className="inputField">
             <InputLabel id="empresa-label">Selecione a Empresa</InputLabel>
             <Select
               labelId="empresa-label"
@@ -118,7 +124,7 @@ const CriarLaudoTecnico = () => {
             </Select>
           </FormControl>
 
-          <FormControl sx={{ m: 1, minWidth: 300 }}>
+          <FormControl sx={{ m: 1, minWidth: 300 }} className="inputField">
             <InputLabel id="tecnico-label">Selecione o Técnico</InputLabel>
             <Select
               labelId="tecnico-label"
@@ -135,7 +141,7 @@ const CriarLaudoTecnico = () => {
             </Select>
           </FormControl>
 
-          <FormControl sx={{ m: 1, minWidth: 300 }}>
+          <FormControl sx={{ m: 1, minWidth: 300 }} className="inputField">
             <InputLabel id="equipamentos-label">Selecione os Equipamentos</InputLabel>
             <Select
               labelId="equipamentos-label"
@@ -161,26 +167,30 @@ const CriarLaudoTecnico = () => {
             </Select>
           </FormControl>
 
-          <TextField
-            id="descricao"
-            name="descricao"
-            label="Descrição"
-            multiline
-            rows={4}
-            value={descricao}
-            onChange={handleInputChange}
-            fullWidth
-            sx={{ m: 1, minWidth: 300 }}
-          />
+          <FormControl sx={{ m: 1, minWidth: 300 }} className="inputField">
+            <TextField
+              id="descricao"
+              name="descricao"
+              label="Descrição"
+              multiline
+              rows={4}
+              value={descricao}
+              onChange={handleInputChange}
+              fullWidth
+            />
+          </FormControl>
 
-          <Button
-            type="button"
-            onClick={handleCadastrarLaudoTecnicoClick}
-            variant="contained"
-            endIcon={<SendIcon />}
-          >
-            Cadastrar Laudo
-          </Button>
+          <Box className="button-container">
+            <Button
+              type="button"
+              onClick={handleCadastrarLaudoTecnicoClick}
+              variant="contained"
+              endIcon={<SendIcon />}
+              className="button"
+            >
+              Cadastrar Laudo
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>
