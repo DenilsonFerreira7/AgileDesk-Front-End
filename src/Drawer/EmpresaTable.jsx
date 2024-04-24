@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField'; // Importe TextField para a barra de pesquisa
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import './CSS/EmpresaTable.css'; // Importe o arquivo CSS
@@ -16,6 +17,7 @@ export default function EmpresaTable() {
   const [empresas, setEmpresas] = useState([]);
   const [showEquipamentos, setShowEquipamentos] = useState(false);
   const [selectedEmpresa, setSelectedEmpresa] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     // Realiza a requisição para obter os dados das empresas
@@ -40,11 +42,27 @@ export default function EmpresaTable() {
     setShowEquipamentos(false);
   };
 
+  // Função para filtrar empresas pelo nome
+  const filteredEmpresas = empresas.filter(empresa =>
+    empresa.nomeEmpresa.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
       {!showEquipamentos && (
         <TableContainer component={Paper} className="table-container"> {/* Adicione a classe "table-container" */}
           <Typography variant="h5" align="center" style={{ marginTop: '20px' }}>Empresas Cadastradas</Typography>
+
+          {/* Barra de pesquisa */}
+          <TextField
+            label="Pesquisar por nome"
+            variant="outlined"
+            fullWidth
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ margin: '15px 0'}} // Alteração da cor da borda para azul
+            />
+
           <Table aria-label="customized table">
             <TableHead>
               <TableRow>
@@ -55,7 +73,7 @@ export default function EmpresaTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {empresas.map((empresa) => (
+              {filteredEmpresas.map((empresa) => (
                 <TableRow key={empresa.empresaId}>
                   <TableCell component="th" scope="row" style={{ }}>
                     {empresa.nomeEmpresa}

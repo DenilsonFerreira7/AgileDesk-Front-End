@@ -5,6 +5,12 @@
   margin-top: 20px; /* Espaço entre o título e o formulário */
   font-size: 24px; /* Tamanho da fonte ajustado */
 }
+.form-box {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
 
 .form-container {
   display: flex;

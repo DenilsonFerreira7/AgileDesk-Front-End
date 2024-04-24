@@ -5,17 +5,31 @@
   color: #ffffff !important; /* Altera a cor do texto no cabeçalho da tabela */
   }
   .company-header {
-    background-color: #0e709d; /* Cor de fundo para o cabeçalho com os dados da empresa */
+    background-color: #14709f; /* Cor de fundo para o cabeçalho com os dados da empresa */
     color: #ffffff !important; /* Cor do texto no cabeçalho da tabela */
 
     padding: 10px; /* Espaçamento interno */
     font-weight: bold; /* Deixa o texto em negrito */
     font-size: 16px; /* Tamanho do texto */
   }
+  .search-input {
+    /* Adicione os estilos desejados para o campo de pesquisa por nome */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 14px;
+    outline: none;
+  }
+  
+  .search-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.1rem rgba(0,123,255,.25);
+  }
 
   .table-container {
     width: 80%;
-    margin-left: 380px;
+    margin-left: -300px;
+    margin-right: 500px;
   }
   @media (min-width: 412px) and (max-width: 914px) {
     .table-container {

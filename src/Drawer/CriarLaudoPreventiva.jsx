@@ -99,79 +99,73 @@ const CriarLaudoPreventiva = () => {
 
   return (
     <Box>
-      <Box className="form-container">
-        <Typography variant="h4" className="title" gutterBottom>
+      <Box className="form-box">
+        <Typography variant="h4" className="form-title" gutterBottom>
           Criar Laudo Preventiva
         </Typography>
 
         <Box className="form-fields-container">
-          <Box className="input-container">
-            <FormControl sx={{ minWidth: 300 }} className="inputField">
-              <InputLabel id="empresa-label">Selecione a Empresa</InputLabel>
-              <Select
-                labelId="empresa-label"
-                id="empresa"
-                value={selectedEmpresa}
-                onChange={handleEmpresaChange}
-                input={<OutlinedInput label="Selecione a Empresa" />}
-              >
-                {empresas.map((empresa) => (
-                  <MenuItem key={empresa.empresaId} value={empresa.empresaId}>
-                    {empresa.nomeEmpresa}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
+          <FormControl sx={{ m: 1, minWidth: 300 }} className="inputField">
+            <InputLabel id="empresa-label">Selecione a Empresa</InputLabel>
+            <Select
+              labelId="empresa-label"
+              id="empresa"
+              value={selectedEmpresa}
+              onChange={handleEmpresaChange}
+              input={<OutlinedInput label="Selecione a Empresa" />}
+            >
+              {empresas.map((empresa) => (
+                <MenuItem key={empresa.empresaId} value={empresa.empresaId}>
+                  {empresa.nomeEmpresa}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-          <Box className="input-container">
-            <FormControl sx={{ minWidth: 300 }} className="inputField">
-              <InputLabel id="tecnico-label">Selecione o Técnico</InputLabel>
-              <Select
-                labelId="tecnico-label"
-                id="tecnico"
-                value={selectedTecnico}
-                onChange={handleTecnicoChange}
-                input={<OutlinedInput label="Selecione o Técnico" />}
-              >
-                {tecnicos.map((tecnico) => (
-                  <MenuItem key={tecnico.tecnicoId} value={tecnico.tecnicoId}>
-                    {tecnico.nomeTecnico}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
+          <FormControl sx={{ m: 1, minWidth: 300 }} className="inputField">
+            <InputLabel id="tecnico-label">Selecione o Técnico</InputLabel>
+            <Select
+              labelId="tecnico-label"
+              id="tecnico"
+              value={selectedTecnico}
+              onChange={handleTecnicoChange}
+              input={<OutlinedInput label="Selecione o Técnico" />}
+            >
+              {tecnicos.map((tecnico) => (
+                <MenuItem key={tecnico.tecnicoId} value={tecnico.tecnicoId}>
+                  {tecnico.nomeTecnico}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-          <Box className="input-container">
-            <FormControl sx={{ minWidth: 300 }} className="inputField">
-              <InputLabel id="equipamentos-label">Selecione os Equipamentos</InputLabel>
-              <Select
-                labelId="equipamentos-label"
-                id="equipamentos"
-                multiple
-                value={selectedEquipamentos}
-                onChange={handleEquipamentosChange}
-                input={<OutlinedInput label="Selecione os Equipamentos" />}
-                renderValue={(selected) => (
-                  <div>
-                    {selected.map((value) => (
-                      <Typography key={value.id}>{value.nomeEquipamento}</Typography>
-                    ))}
-                  </div>
-                )}
-              >
-                {equipamentosDaEmpresa.map((equipamento) => (
-                  <MenuItem key={equipamento.id} value={equipamento}>
-                    <Checkbox checked={selectedEquipamentos.some(item => item.id === equipamento.id)} />
-                    {equipamento.nomeEquipamento}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
+          <FormControl sx={{ m: 1, minWidth: 300 }} className="inputField">
+            <InputLabel id="equipamentos-label">Selecione os Equipamentos</InputLabel>
+            <Select
+              labelId="equipamentos-label"
+              id="equipamentos"
+              multiple
+              value={selectedEquipamentos}
+              onChange={handleEquipamentosChange}
+              input={<OutlinedInput label="Selecione os Equipamentos" />}
+              renderValue={(selected) => (
+                <div>
+                  {selected.map((value) => (
+                    <Typography key={value.id}>{value.nomeEquipamento}</Typography>
+                  ))}
+                </div>
+              )}
+            >
+              {equipamentosDaEmpresa.map((equipamento) => (
+                <MenuItem key={equipamento.id} value={equipamento}>
+                  <Checkbox checked={selectedEquipamentos.some(item => item.id === equipamento.id)} />
+                  {equipamento.nomeEquipamento}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-          <Box className="input-container">
+          <FormControl sx={{ m: 1, minWidth: 300 }} className="inputField">
             <TextField
               id="descricao"
               name="descricao"
@@ -181,9 +175,8 @@ const CriarLaudoPreventiva = () => {
               value={descricao}
               onChange={handleInputChange}
               fullWidth
-              sx={{ minWidth: 300 }}
             />
-          </Box>
+          </FormControl>
 
           <Box className="button-container">
             <Button

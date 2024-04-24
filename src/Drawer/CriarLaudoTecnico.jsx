@@ -101,7 +101,7 @@ const CriarLaudoTecnico = () => {
 
   return (
     <Box>
-      <Box className="form-container">
+      <Box className="form-box"> {/* Nova div envolvendo todo o formulário */}
         <Typography variant="h4" className="form-title" gutterBottom>
           Criar Laudo Técnico
         </Typography>

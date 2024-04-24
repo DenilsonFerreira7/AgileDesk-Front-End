@@ -14,7 +14,7 @@
 }
 
 .form {
-  width: 400px;
+  width: 700px;
   text-align: center;
 }
 
@@ -23,8 +23,18 @@
   margin-bottom: 10px;
 }
 
+/* stylesTextField.css */
+
+.formBackground {
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), -4px 0 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  padding: 20px; /* Espaçamento interno */
+  border-radius: 8px; /* Bordas arredondadas */
+}
+
+
 .move-left {
-  margin-left: 750px; /* Ajuste o valor negativo conforme necessário */
+  margin-left: 0px; /* Ajuste o valor negativo conforme necessário */
 }
 
 @media (min-width: 412px) and (max-width: 914px) {

@@ -7,7 +7,6 @@ import Slide from '@mui/material/Slide';
 import axios from 'axios';
 import './CSS/stylesTextField.css'; // Importe o arquivo CSS
 
-
 const CadastroTecnicoForm = () => {
   const [nome, setNome] = useState('');
   const [cargo, setCargo] = useState('');
@@ -63,46 +62,48 @@ const CadastroTecnicoForm = () => {
           </div>
         </Slide>
         <div className="centeredContent">
-          <Typography variant="h4" gutterBottom>
-            Cadastrar Técnico
-          </Typography>
-          <form className="form" onSubmit={handleSubmit}>
-            <TextField
-              className="textField"
-              label="Nome"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              className="textField"
-              label="Cargo"
-              value={cargo}
-              onChange={(e) => setCargo(e.target.value)}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              className="textField"
-              label="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              className="textField"
-              label="Telefone"
-              value={telefone}
-              onChange={(e) => setTelefone(e.target.value)}
-              fullWidth
-              margin="normal"
-            />
-            <Button className="button" type="submit" variant="contained" color="primary">
-              Cadastrar
-            </Button>
-          </form>
+          <div className="formBackground"> {/* Adicionando a div para o fundo com sombra */}
+            <Typography variant="h4" gutterBottom>
+              Cadastrar Técnico
+            </Typography>
+            <form className="form" onSubmit={handleSubmit}>
+              <TextField
+                className="textField"
+                label="Nome"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                className="textField"
+                label="Cargo"
+                value={cargo}
+                onChange={(e) => setCargo(e.target.value)}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                className="textField"
+                label="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                className="textField"
+                label="Telefone"
+                value={telefone}
+                onChange={(e) => setTelefone(e.target.value)}
+                fullWidth
+                margin="normal"
+              />
+              <Button className="button" type="submit" variant="contained" color="primary">
+                Cadastrar
+              </Button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

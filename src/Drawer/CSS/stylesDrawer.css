@@ -1,3 +1,5 @@
+/*stylesDrawer.css*/
+
 .sub-categories {
   display: flex;
   flex-direction: column;
@@ -7,61 +9,44 @@
   padding: 10px 20px; /* Adicione preenchimento interno */
 }
 
-/* stylesDrawer.css */
-
-.formBox {
-  display: flex;
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center; /* Centraliza verticalmente */
+.main-container {
+  margin-left: 300px; /* Ajustando o espaçamento à esquerda */
 }
 
-.centeredContent {
-  text-align: center; /* Centraliza o texto horizontalmente */
+/* Adicionando a regra de mídia para a resolução 412x914 */
+@media (max-width: 412px) and (max-height: 914px) {
+  .main-container {
+    margin-left: -305px; /* Ajustando o espaçamento à esquerda */
+  }
 }
 
+.category-container {
+  border: 2px solid #1290cb; /* Adicione a cor da borda desejada */
+  border-radius: 10px; /* Adicione o raio da borda desejado */
+  margin: 10px; /* Adicione margem ao redor do container, se desejar */
+  padding: 10px; /* Adicione preenchimento interno ao container, se desejar */
+}
 
-.WelcomeText-container {
+.drawerHeader {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100%;
-  padding-right: 20px; /* Espaço em branco à direita */
-  max-width: calc(100% - 2 * 20px); /* Largura máxima responsiva */
-  margin-left: auto;
-  margin-right: auto;
+  justify-content: flex-end;
+  padding: 0 8px; /* Ajuste o padding conforme desejado */
+  min-height: 48px; /* Defina a altura mínima conforme desejado */
+  background-color: #1290cb; /* Defina a cor de fundo desejada */
 }
 
-
-  .category-container {
-    border: 2px solid #1290cb; /* Adicione a cor da borda desejada */
-    border-radius: 10px; /* Adicione o raio da borda desejado */
-    margin: 10px; /* Adicione margem ao redor do container, se desejar */
-    padding: 10px; /* Adicione preenchimento interno ao container, se desejar */
-  }
-
-  .drawerHeader {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0 8px; /* Ajuste o padding conforme desejado */
-    min-height: 48px; /* Defina a altura mínima conforme desejado */
-    background-color: #1290cb; /* Defina a cor de fundo desejada */
-  }
+.custom-drawer .MuiDrawer-paper {
+  width: drawerWidth;
+  box-sizing: border-box;
+  background-color: #0c6690;
+  border-right: 2px solid #1290cb; /* Altere a cor da borda aqui */
   
-  .custom-drawer .MuiDrawer-paper {
-    width: drawerWidth;
-    box-sizing: border-box;
-    border-right: 2px solid #1290cb; /* Altere a cor da borda aqui */
-  }
+}
 
-  @media (min-width: 412px) and (max-width: 914px) {
-    .WelcomeText-container {
-      padding-left: 80px; /* Espaço em branco à esquerda para tela 412x914 */
-    }
-  }
-  
-  @media (min-width: 915px) {
-    .WelcomeText-container {
-      padding-left: 400px; /* Espaço em branco à esquerda para telas maiores */
-    }
+.MuiListItemButton-root .MuiListItemText-root {
+  color: rgb(255, 255, 255); /* Defina a cor da fonte desejada */
+}
+.sub-categories {
+  background-color: #094763; /* Defina a cor de fundo desejada */
 }

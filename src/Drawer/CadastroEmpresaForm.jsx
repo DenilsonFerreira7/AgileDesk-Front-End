@@ -42,7 +42,13 @@ const CadastroEmpresaForm = ({ onSubmit }) => {
 
   return (
     <div className="formContainer move-left">
-      <div className="formBox">
+      <div className="formBox" 
+      style={{ 
+      backgroundColor: '#fff', 
+      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), -4px 0 6px rgba(0, 0, 0, 0.1)', 
+      padding: '20px',
+      borderRadius: '15px' 
+      }}>
         <Slide direction="down" in={alertStatus !== null}>
           <div style={{ position: 'fixed', top: '25%', left: '45%', zIndex: 999 }}>
             {alertStatus === 'success' && (
@@ -58,7 +64,7 @@ const CadastroEmpresaForm = ({ onSubmit }) => {
           </div>
         </Slide>
         <div className="centeredContent">
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom style={{ marginTop: 0 }}>
             Cadastrar Empresa
           </Typography>
           <form className="form" onSubmit={handleSubmit}>

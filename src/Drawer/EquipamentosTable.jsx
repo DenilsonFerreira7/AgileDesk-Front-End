@@ -36,7 +36,7 @@ export default function EquipamentosTable({ empresaId, onClose }) {
           {/* Cabeçalho com os dados da empresa */}
           {empresa && (
             <TableRow>
-              <TableCell colSpan={3} className="company-header" align="left">
+              <TableCell colSpan={5} className="company-header" align="left">
                 <Typography variant="h6" gutterBottom>{`Nome da Empresa: ${empresa.nomeEmpresa}`}</Typography>
                 <Typography variant="h6" gutterBottom>{`Endereço: ${empresa.endereco}`}</Typography>
                 <Typography variant="h6" gutterBottom>{`Telefone: ${empresa.telefone}`}</Typography>
@@ -46,8 +46,9 @@ export default function EquipamentosTable({ empresaId, onClose }) {
           <TableRow>
             <TableCell className="table-header-cell">Nome do Tipo</TableCell>
             <TableCell align="left" className="table-header-cell">Descrição</TableCell>
-            <TableCell align="left" className="table-header-cell">Setor</TableCell> {/* Adicione uma nova célula de cabeçalho */}
-            {/* Adicione outras células de cabeçalho conforme necessário */}
+            <TableCell align="left" className="table-header-cell">Setor</TableCell>
+            <TableCell align="left" className="table-header-cell">Acesso Remoto</TableCell> {/* Nova célula para Acesso Remoto */}
+            <TableCell align="left" className="table-header-cell">Senha Remoto</TableCell> {/* Nova célula para Senha Remoto */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -57,8 +58,9 @@ export default function EquipamentosTable({ empresaId, onClose }) {
                 {equipamento.tipoEquipamento.nomeEquipamento}
               </TableCell>
               <TableCell align="left">{equipamento.descricao}</TableCell>
-              <TableCell align="left">{equipamento.setor}</TableCell> {/* Adicione uma nova célula para o setor */}
-              {/* Adicione outras células de acordo com os atributos do equipamento */}
+              <TableCell align="left">{equipamento.setor}</TableCell>
+              <TableCell align="left">{equipamento.acessoRemoto}</TableCell> {/* Dados de Acesso Remoto */}
+              <TableCell align="left">{equipamento.senhaRemoto}</TableCell> {/* Dados de Senha Remoto */}
             </TableRow>
           ))}
         </TableBody>
