@@ -1,42 +1,90 @@
-/* stylesTable.css */
+/* EmpresaTable.css */
 
 .table-header-cell {
   background-color: #1290cb; /* Altera a cor de fundo do cabeçalho da tabela */
   color: #ffffff !important; /* Altera a cor do texto no cabeçalho da tabela */
-  }
-  .company-header {
-    background-color: #14709f; /* Cor de fundo para o cabeçalho com os dados da empresa */
-    color: #ffffff !important; /* Cor do texto no cabeçalho da tabela */
+  cursor: pointer; /* Adicione um cursor para indicar que é clicável */
+  width: 150px; /* Defina uma largura fixa para as células do cabeçalho */
+}
+.search-input {
+  /* Adicione os estilos desejados para o campo de pesquisa por nome */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 14px;
+  outline: none;
+  margin-right: 10px; /* Adiciona uma margem à direita de 10px */
+}
 
-    padding: 10px; /* Espaçamento interno */
-    font-weight: bold; /* Deixa o texto em negrito */
-    font-size: 16px; /* Tamanho do texto */
-  }
-  .search-input {
-    /* Adicione os estilos desejados para o campo de pesquisa por nome */
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding: 8px;
-    font-size: 14px;
-    outline: none;
-  }
-  
-  .search-input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 0.1rem rgba(0,123,255,.25);
-  }
+.search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.1rem rgba(0,123,255,.25);
+}
+.table-description-cell {
+  width: 200px; /* Defina a largura fixa desejada para a célula de descrição */
+  white-space: nowrap; /* Impede que o texto seja quebrado em várias linhas */
+  overflow: hidden; /* Esconde o texto que ultrapassa a largura da célula */
+  text-overflow: ellipsis; /* Adiciona três pontos quando o texto é truncado */
+}
 
+.table-container {
+  width: 80%;
+  margin-left: -300px;
+  margin-right: 500px;
+}
+
+.button-consultar {
+  /* Adicione os estilos desejados para os botões "Consultar Laudo Técnico" e "Consultar Laudo Preventiva" */
+  margin-right: 10px; /* Adicione uma margem à direita de 10px para separar os botões */
+  margin-top: -10px; /* Adicione uma margem superior negativa para subir os botões */
+}
+
+.table-title {
+  margin-left: 0px; /* Ajuste o valor da margem conforme necessário para mover o título para a esquerda */
+}
+
+.button-consultar:nth-of-type(1) {
+  margin-left: 190px; /* Adicione uma margem à esquerda de 10px apenas para o segundo botão */
+    margin-top: 0px; /* Adicione uma margem superior negativa para subir os botões */
+}
+
+.button-consultar:nth-of-type(2) {
+  margin-left: 10px; /* Adicione uma margem à esquerda de 10px apenas para o segundo botão */
+  margin-top: 0px; /* Adicione uma margem superior negativa para subir os botões */
+}
+
+.consultasLaudo {
+  padding-bottom: 10px;
+}
+
+/* Definição de estilos para o hover do cabeçalho da tabela */
+.table-header-cell:hover {
+  background-color: #f0f0f0; /* Altere a cor de fundo para o tom desejado */
+}
+
+/* Definição da seta ao lado do cabeçalho da tabela no hover */
+.table-header-cell:hover::after {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #0d75a5; /* Altere a cor da seta para a desejada */
+  margin-left: 5px;
+}
+
+
+/* Cor de fundo do cabeçalho da tabela quando o mouse está sobre ele */
+.table-header-cell:hover {
+  background-color: #0d75a5; /* Defina a cor desejada */
+}
+
+/* Definição de estilos responsivos */
+@media (min-width: 412px) and (max-width: 914px) {
   .table-container {
     width: 80%;
-    margin-left: -300px;
-    margin-right: 500px;
-  }
-  @media (min-width: 412px) and (max-width: 914px) {
-    .table-container {
-      width: 80%;
-      margin-left: 4px;
-      margin-right: 200px; /* Adicione uma margem direita apenas em telas maiores */
-
+    margin-left: 4px;
+    margin-right: 200px; /* Adicione uma margem direita apenas em telas maiores */
   }
 }
-  
