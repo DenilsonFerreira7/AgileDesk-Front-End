@@ -115,9 +115,11 @@ export default function ConsultarLaudosTecnicos() {
 
   return (
     <div>
-      <TableContainer component={Paper} className="table-container">
+      <TableContainer component={Paper} className="table-container" style={{ maxWidth: '1500px', marginLeft: '300px' }}>
+
+
         <Typography variant="h5" align="center" className="table-title">{exibirLaudosTecnicos ? 'Laudos Técnicos' : 'Laudos Preventiva'}</Typography>
-        <div className='consultasLaudo' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '24px' }}>
+        <div className='consultasLaudo' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: '40px' }}>
           <TextField
             label="Pesquisar nome da empresa"
             variant="outlined"

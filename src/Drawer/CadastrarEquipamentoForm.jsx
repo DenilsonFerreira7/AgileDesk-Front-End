@@ -158,12 +158,7 @@ const CadastrarEquipamentos = () => {
   const theme = useTheme();
 
   return (
-    <Box sx={{
-      backgroundColor: theme.palette.background.default,
-      borderRadius: theme.shape.borderRadius,
-      padding: theme.spacing(3),
-      boxShadow: `0 4px 6px rgba(0, 0, 0, 0.1), -4px 0 6px rgba(0, 0, 0, 0.1)`
-    }}>
+    <Box className="form-box">
       <Typography variant="h5" className="form-title" gutterBottom>
         Cadastre um novo equipamento
       </Typography>

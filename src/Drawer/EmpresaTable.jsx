@@ -50,7 +50,7 @@ export default function EmpresaTable() {
   return (
     <div>
       {!showEquipamentos && (
-        <TableContainer component={Paper} className="table-container"> {/* Adicione a classe "table-container" */}
+        <TableContainer component={Paper} className="table-empresa"> {/* Adicione a classe "table-container" */}
           <Typography variant="h5" align="center" style={{ marginTop: '20px' }}>Empresas Cadastradas</Typography>
 
           {/* Barra de pesquisa */}

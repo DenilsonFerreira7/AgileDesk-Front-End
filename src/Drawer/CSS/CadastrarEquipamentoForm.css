@@ -2,8 +2,21 @@
 
 .form-container {
   max-width: 600px;
-  margin: 0 auto;
   padding: 20px; /* Adiciona espaço interno */
+  margin-left: 100px; /* Adicione uma margem esquerda de 100px */
+}
+.form-box {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), -4px 0 6px rgba(0, 0, 0, 0.1);
+  margin-left: 520px; /* Adicione a margem esquerda desejada */
+  margin-right: 0; /* Redefina a margem à direita para 0 */
+}
+
+.company-header{
+  background-color:#3392be;
+  color: #ffffff !important; /* Altera a cor do texto no cabeçalho da tabela */
 }
 
 .form-title {
@@ -37,4 +50,30 @@
 .form-fields-container .MuiFormControl-root {
   width: 700px; /* Largura estendida para ocupar a largura do contêiner */
 }
+@media (min-width: 412px) and (max-width: 914px) {
 
+    .form-fields-container {
+      width: 80%; /* Reduz a largura do contêiner dos campos */
+      margin: 0 auto; /* Centraliza o contêiner na tela */
+    }
+  
+    .form-fields-container .MuiFormControl-root {
+      width: 100%; /* Define a largura dos campos para ocupar 100% do contêiner */
+    }
+  
+    /* Ajuste o tamanho dos campos de acordo com a largura desejada */
+    .form-fields-container .MuiTextField-root,
+    .form-fields-container .MuiFormControl-root {
+      width: calc(100% - 20px); /* Define a largura dos campos com uma margem de 10px em cada lado */
+      margin-bottom: 20px; /* Adiciona espaço entre os campos */
+    }
+    .form-box {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 24px;
+      margin: 70px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), -4px 0 6px rgba(0, 0, 0, 0.1);
+      margin-left: 2px; /* Adicione a margem esquerda desejada */
+      margin-right: 0; /* Redefina a margem à direita para 0 */
+    }
+  }

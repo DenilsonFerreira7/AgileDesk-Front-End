@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import Slide from '@mui/material/Slide';
 import axios from 'axios';
+import './CSS/stylesTextField.css'; // Importe o arquivo CSS
+
 
 const CadastroEmpresaForm = ({ onSubmit }) => {
   const [nome, setNome] = useState('');

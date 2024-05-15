@@ -1,11 +1,13 @@
 /* EmpresaTable.css */
 
 .table-header-cell {
-  background-color: #1290cb; /* Altera a cor de fundo do cabeçalho da tabela */
+  background-color: #0e8dc8; /* Altera a cor de fundo do cabeçalho da tabela */
   color: #ffffff !important; /* Altera a cor do texto no cabeçalho da tabela */
   cursor: pointer; /* Adicione um cursor para indicar que é clicável */
-  width: 150px; /* Defina uma largura fixa para as células do cabeçalho */
+  width: 200px; /* Defina uma largura fixa para as células do cabeçalho */
 }
+
+
 .search-input {
   /* Adicione os estilos desejados para o campo de pesquisa por nome */
   border-radius: 5px;
@@ -31,6 +33,12 @@
   width: 80%;
   margin-left: -300px;
   margin-right: 500px;
+}
+
+.table-empresa{
+  width: 80%;
+  margin-left: 350px;
+  margin-right:50px;
 }
 
 .button-consultar {
@@ -87,4 +95,10 @@
     margin-left: 4px;
     margin-right: 200px; /* Adicione uma margem direita apenas em telas maiores */
   }
+  .table-empresa {
+    width: 80%;
+    margin-left: 10px; /* Ajuste conforme necessário */
+    margin-right: 50px; /* Ajuste conforme necessário */
+  }
+
 }

@@ -41,12 +41,11 @@
   box-sizing: border-box;
   background-color: #0c6690;
   border-right: 2px solid #1290cb; /* Altere a cor da borda aqui */
-  
+}
+.custom-drawer .MuiDrawer-paper .sub-categories {
+  background-color: #0a587c; /* Mantenha a cor de fundo das subcategorias */
 }
 
 .MuiListItemButton-root .MuiListItemText-root {
   color: rgb(255, 255, 255); /* Defina a cor da fonte desejada */
-}
-.sub-categories {
-  background-color: #094763; /* Defina a cor de fundo desejada */
 }

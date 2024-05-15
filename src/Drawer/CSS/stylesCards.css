@@ -1,0 +1,55 @@
+.cardContainer {
+  position: relative;
+  
+}
+.tecnicosContainer {
+  margin-left: 350px; /* Ajuste a margem esquerda negativa para mover para a esquerda */
+  margin-right: 0; /* Remova a margem direita para manter o espaçamento */
+}
+.uploadContainer{
+  padding: 20px 30px;
+  width: 50%; /* Defina a largura desejada */
+  margin-left: 170px;
+  background-color: rgb(186, 180, 180);
+  border-radius: 0%;  
+  padding-left: auto;
+  padding-right: auto;
+}
+
+.card {
+  margin-top: 90px;
+  position: relative;
+  background-image: url('/src/Drawer/imgDrawer/fundoUsuario.png'); /* Caminho para a imagem de fundo */
+  background-size: cover; /* Garante que a imagem de fundo cubra todo o espaço do card */
+  background-position: center; /* Centraliza a imagem de fundo */
+  border-radius: 10px; /* Borda arredondada para o card */
+  overflow: hidden; /* Para garantir que a imagem de fundo não ultrapasse os limites do card */
+  width: 300px; /* Largura fixa do card */
+  height: 500px; /* Altura fixa do card */
+}
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end; /* Para alinhar o conteúdo à direita */
+  align-items: flex-end; /* Para alinhar o conteúdo na parte inferior */
+  margin-top: 2px; /* Para adicionar um espaçamento superior */
+}
+
+.cardImage {
+  width: 150px; /* Largura fixa da imagem de perfil */
+  height: 150px; /* Altura fixa da imagem de perfil */
+  object-fit: cover; /* Faz com que a imagem de perfil cubra totalmente o container mantendo a proporção */
+  border-radius: 50%; /* Transforma a imagem em um círculo */
+  position: absolute; /* Posição absoluta para sobrepor a imagem de fundo */
+  top: 150px; /* Distância do topo do card */
+  left: calc(50% - 75px); /* Centraliza horizontalmente a foto de perfil */
+  transform: translateY(-50%); /* Centraliza verticalmente a foto de perfil */
+}
+
+.cardContent {
+  position: absolute; /* Posição absoluta para sobrepor a imagem de fundo */
+  bottom: 140px; /* Distância do fundo do card */
+  left: 12px; /* Distância da esquerda do card */
+  color: rgb(0, 0, 0); /* Cor do texto */
+}
+
+
